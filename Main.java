@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import out.production.BlockMe.fonctions.regles;
 
 public class Main {
     public static void main(String[] args) {
@@ -50,8 +51,11 @@ public class Main {
             // Clear le terminal
             System.out.print("\033[H\033[2J");
 
-            // Afficher le choix de l'utilisateur
-            System.out.println("Choix : " + choix);
+            if (choix.equals("2")) { // Si l'utilisateur saisit les règles
+                regles.afficherRegles(); // Afficher les règles
+
+            }
+
         }
     }
 }
