@@ -1,5 +1,9 @@
 import java.util.Scanner;
-import out.production.BlockMe.fonctions.regles;
+import java.util.ArrayList;
+import java.util.Arrays; // Importez la classe Arrays
+
+import fonctions.*;
+import classes.*;
 
 public class Main {
     public static void main(String[] args) {
@@ -7,12 +11,15 @@ public class Main {
         // Créer un Scanner pour la saisie utilisateur
         Scanner entre = new Scanner(System.in);
 
+        String choix = ""; // Initialise la variable de choix à une chaîne vide
+
+     
+
         // Clear le terminal
         System.out.print("\033[H\033[2J");
 
         // Boucle principale du programme
-        while (true) {
-            String choix = ""; // Initialise la variable de choix à une chaîne vide
+        while (!choix.equals("4")) {
 
             // Afficher le titre du jeu
             System.out.print("" +
@@ -39,12 +46,12 @@ public class Main {
             );
 
             // Tant que l'utilisateur ne saisit pas une option valide, demander à nouveau
-            while (!(choix.equals("1") || choix.equals("2") || choix.equals("3") || choix.equals("4"))) {
+            while (!(verificateur.verifChiffreEnEntre(1,4,choix))) {
                 choix = entre.next(); // Lire l'entrée utilisateur
 
                 // Si l'option saisie n'est pas valide, afficher un message d'erreur
-                if (!(choix.equals("1") || choix.equals("2") || choix.equals("3") || choix.equals("4"))) {
-                    System.out.println("Veuillez saisir une option valide : (1 - Jouer, 2 - Règles, 3 - Scores, 4 - Quitter)");
+                if (!(verificateur.verifChiffreEnEntre(1,4,choix))) {
+                    System.out.println("\nVeuillez saisir une option valide : (1 - Jouer, 2 - Règles, 3 - Scores, 4 - Quitter) :");
                 }
             }
             
@@ -52,10 +59,25 @@ public class Main {
             System.out.print("\033[H\033[2J");
 
             if (choix.equals("2")) { // Si l'utilisateur saisit les règles
-                regles.afficherRegles(); // Afficher les règles
+                Regles.afficherRegles(); // Afficher les règles
 
             }
 
+            if (choix.equals("1")) { // Si l'utilisateur saisit le jeu
+                jouer.jouer(entre); // Lancer le jeu
+                choix = ""; // Réinitialise la variable de choix à une chaîne vide   
+            }
+
+            if (choix.equals("2")) { // Si l'utilisateur saisit les règles
+                Regles.afficherRegles(); // Afficher les règles
+                choix = ""; // Réinitialise la variable de choix à une chaîne vide
+            }
+
+            if (choix.equals("3")) { // Si l'utilisateur saisit les règles
+                Scores.afficherScores(); // Afficher les scores
+                choix = ""; // Réinitialise la variable de choix à une chaîne vide
+            }
         }
+        entre.close(); // fermmer le scanner
     }
 }
