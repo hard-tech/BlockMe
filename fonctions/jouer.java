@@ -61,7 +61,6 @@ public class jouer {
                     while (!directionDeplacement.equals("z") && !directionDeplacement.equals("s") && !directionDeplacement.equals("q") && !directionDeplacement.equals("d")){
                         System.out.println("Dans quelle direction voulez vous vous déplacer ? :");
                         directionDeplacement = entre.nextLine(); // Lire l'entrée utilisateur
-                        System.out.println(directionDeplacement);
                     }
 
                     // Clear le terminal
@@ -73,18 +72,43 @@ public class jouer {
                     // déplacer le joueur
                     deplacerJoueur.seDeplacer(joueurs[i], joueurs, directionDeplacement);
 
+                    //mise à jour de la plateau de jeu
                     Plateau.miseAJourPlateauDeJeu(joueurs);
-                    String positionCase = "";
-                    //tant que positionCase n'est pas present dans nomsDeColonne demander sur quelle ligne se trouve la case que le joueur veux detruire ?
-                    for (int j = 0; j < nomsDeColonne.length; j++) {
-                        if (nomsDeColonne[j].equals(positionCase)) {
-                            destinationCaseDetruite[0] = j;
+
+                    //afficher le plateau de jeu
+                    Plateau.afficherPlateau();
+
+                    String positionCase1 = "";
+                    boolean choixCase1 = false;
+                    //tant que positionCase1 n'est pas present dans nomsDeColonne demander sur quelle ligne se trouve la case que le joueur veux detruire ?
+                    while (!choixCase1) {
+                        System.out.println("Dans quelle colonne ce trouve la case que vous voulez detruire ? :");
+                        positionCase1 = entre.nextLine(); // Lire l'entrée utilisateur
+                        for (int j = 0; j < nomsDeColonne.length; j++) {
+                            if (nomsDeColonne[j].equals(positionCase1)) {
+                                destinationCaseDetruite[1] = j;
+                                choixCase1 = true;
+                            }
                         }
                     }
-                    
-                    destinationCaseDetruite[1] = 0;
-                    Plateau.detruireCase(destinationCaseDetruite);
-                    Plateau.afficherPlateau();
+                    String positionCase0 = "";
+                    boolean choixCase0 = false;
+                    //tant que positionCase0 n'est pas present dans nomsDeColonne demander sur quelle ligne se trouve la case que le joueur veux detruire ?
+                    while (!choixCase0) {
+                        System.out.println("Dans quelle ligne ce trouve la case que vous voulez detruire ? :");
+                        positionCase0 = entre.nextLine(); // Lire l'entrée utilisateur
+                        for (int j = 0; j < nomsDeLigne.length; j++) {
+                            if (nomsDeLigne[j].equals(positionCase0)) {
+                                destinationCaseDetruite[0] = j;
+                                choixCase0 = true;
+                            }
+                        }
+                    }
+
+                    System.out.print("\033[H\033[2J");
+
+                    Plateau.detruireCase(destinationCaseDetruite); // détruire la case de destination
+                    Plateau.afficherPlateau(); // afficher le plateau de jeu
                 }
 
             // Clear le terminal
