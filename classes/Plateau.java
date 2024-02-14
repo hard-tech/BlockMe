@@ -81,6 +81,10 @@ public class Plateau{
         }
     }
 
+    public static void detruireCase(int [] destination){
+        plateau[destination[0]][destination[1]] = " X ";
+    }
+
     /**
      * La fonction "afficherPlateau" imprime un plateau de jeu avec une bordure à double ligne.
      */
