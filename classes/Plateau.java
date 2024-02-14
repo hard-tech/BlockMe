@@ -50,7 +50,8 @@ public class Plateau{
         }
     }
 
-
+    public static void miseAJourPlateauDeJeu() {
+    }
 
     /**
      * La fonction "afficherPlateau" imprime un plateau de jeu avec une bordure à double ligne.
