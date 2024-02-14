@@ -19,7 +19,7 @@ public class Plateau{
      * La fonction PlateauDeJeu initialise un plateau de jeu avec des espaces vides et définit les positions des
      * joueurs ou des obstacles.
      */
-    public static void PlateauDeJeu() {
+    public static void initialisationPlateauDeJeu() {
         // Initialisation du plateau avec des cases vides
         for (int i = 0; i < HAUTEUR; i++) {
             for (int j = 0; j < LARGEUR; j++) {

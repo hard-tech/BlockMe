@@ -2,7 +2,7 @@
  * La classe Verificateur dans le package fonction fournit une méthode pour vérifier si un nombre donné
  * se trouve dans une plage spécifiée.
  */
-package fonction;
+package fonctions;
 
 public class verificateur {
     public static boolean verifChiffreEnEntre(int debut, int fin, String nombreDeJoueurs) {
