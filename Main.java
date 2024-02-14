@@ -11,6 +11,7 @@ public class Main {
 
         String nombreDeJoueursVoulu = "";
         int nombreDeJoueurs = 0;
+        String[] nomActuelJoueur;
         String choix = ""; // Initialise la variable de choix à une chaîne vide
 
         Joueur[] joueurs;
@@ -51,7 +52,7 @@ public class Main {
 
                 // Si l'option saisie n'est pas valide, afficher un message d'erreur
                 if (!(verificateur.verifChiffreEnEntre(1,4,choix))) {
-                    System.out.println("\nVeuillez saisir une option valide : (1 - Jouer, 2 - Règles, 3 - Scores, 4 - Quitter) : le");
+                    System.out.println("\nVeuillez saisir une option valide : (1 - Jouer, 2 - Règles, 3 - Scores, 4 - Quitter) :");
                 }
             }
             
@@ -63,19 +64,7 @@ public class Main {
 
             }
 
-            if (choix.equals("1")) { // Si l'utilisateur saisit les règles
-
-            
-                // Temps que le nombre donner n'est pas cmprit entre 2 et 4 demmander à nouveau
-
-                // try {
-                //     do{
-                //         System.out.println("Veuillez saisir un nombre entre 2 et 4 : ");
-                //         nombreDeJoueursVoulut = entre.next(); // Lire l'entrée utilisateur
-                //     }while (verificateur.verifChiffreEnEntre(2, 4, nombreDeJoueursVoulut)); //
-                // } catch (NumberFormatException e) {
-                //     System.out.println("Nombre saisie invalide! \n");
-                // }
+            if (choix.equals("1")) { // Si l'utilisateur saisit le jeu
 
                 /**
                  * Initialisation du plateau des jouers
@@ -85,9 +74,20 @@ public class Main {
                 if (verificateur.verifChiffreEnEntre(2, 4, nombreDeJoueursVoulu)) {
                     nombreDeJoueurs = Integer.parseInt(nombreDeJoueursVoulu);
                     joueurs = new Joueur[nombreDeJoueurs]; // Initialisation du tableau de joueurs avec la taille appropriée
+                    nomActuelJoueur = new String[nombreDeJoueurs];
+                    
+                    //pour chaque joueur creer un joueur avec un nom different des autres
                     for (int i = 0; i < nombreDeJoueurs; i++) {
                         joueurs[i] = new Joueur(); // Initialisation de chaque joueur
+                        joueurs[i].nom = Joueur.choisirNomPotentiel(); // Choisir le nom du joueur
+                        
+                        //si le nom du joeur est dans nomActuelJoueur prendre un nouveau nom
+                        if(nomActuelJoueur.contains(joueurs[i].nom)){
+                            
+                        }
+                        System.out.println(joueurs[i].nom);
                     }
+
                 } else {
                     System.out.println("Nombre de joueurs invalide !");
                 }
@@ -114,7 +114,8 @@ public class Main {
                     default:
                         System.out.println("\n Nombre de joueurs invalide ! Nous ne pouvons pas lancer la partie!");
                 }
-
+                
+                nombreDeJoueurs = 0; //definir la variable de nombre de joueurs voulu à une chaîne vide
                 choix = ""; // Réinitialise la variable de choix à une chaîne vide (permet de revenir au menu principal)
                 // Clear le terminal
                 // System.out.print("\033[H\033[2J");
