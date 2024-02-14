@@ -1,8 +1,8 @@
 // Déclaration du package
-package out.production.BlockMe.fonctions;
+package classes;
 
 // Définition de la classe regles
-public class regles {
+public class Regles {
     
     // Définition de la méthode afficherRegles
     public static void afficherRegles() {
