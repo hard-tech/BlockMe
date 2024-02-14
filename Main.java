@@ -103,7 +103,7 @@ public class Main {
                 }
 
                 
-                Plateau.initialisationPlateauDeJeu(); // initialisation du plateau de jeu
+                Plateau.initialisationPlateauDeJeu(nombreDeJoueurs); // initialisation du plateau de jeu
                 Plateau.afficherPlateau();
 
                 System.out.println(nombreDeJoueurs);
