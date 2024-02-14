@@ -1,4 +1,6 @@
 import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.Arrays; // Importez la classe Arrays
 
 import fonctions.*;
 import classes.*;
@@ -77,14 +79,22 @@ public class Main {
                     nomActuelJoueur = new String[nombreDeJoueurs];
                     
                     //pour chaque joueur creer un joueur avec un nom different des autres
+                    // Boucle pour chaque joueur
                     for (int i = 0; i < nombreDeJoueurs; i++) {
                         joueurs[i] = new Joueur(); // Initialisation de chaque joueur
                         joueurs[i].nom = Joueur.choisirNomPotentiel(); // Choisir le nom du joueur
                         
-                        //si le nom du joeur est dans nomActuelJoueur prendre un nouveau nom
-                        if(nomActuelJoueur.contains(joueurs[i].nom)){
-                            
+                        // Conversion du tableau de noms en une liste pour la recherche d'occurrence
+                        ArrayList<String> nomsListe = new ArrayList<>(Arrays.asList(nomActuelJoueur));
+                        
+                        // Si le nom du joueur est déjà pris, choisir un nouveau nom
+                        while (nomsListe.contains(joueurs[i].nom)) {
+                            joueurs[i].nom = Joueur.choisirNomPotentiel();
                         }
+                        
+                        // Ajouter le nom du joueur à la liste
+                        nomActuelJoueur[i] = joueurs[i].nom;
+                        
                         System.out.println(joueurs[i].nom);
                     }
 

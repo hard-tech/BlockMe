@@ -9,7 +9,7 @@ public class Joueur {
     // définition de la varible enVie
     public static boolean enVie = true;
     public static String nom;
-    private static final String[] nomsPotentiels = {"joueur1", "joueur2", "joueur3", "joueur4", "joueur5", "joueur6", "joueur7", "joueur8", "joueur9", "joueur10"};
+    private static final String[] nomsPotentiels = {"Syndra", "Teemo", "Warwick", "Maitre Yi", "Queen", "Lux", "Brand", "Fizz", "Kassadin", "Yasuo", "Rengar", "Katarina", "Kayle", "Illaoi", "Trundle"};
 
     
     // choisir dans la liste des noms potentiels un nom au hazard
