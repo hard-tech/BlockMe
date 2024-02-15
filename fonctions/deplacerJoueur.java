@@ -14,7 +14,7 @@ public class deplacerJoueur {
     /**
      * La fonction "seDeplacer" permet de déplacer un joueur dans une direction tout en vérifiant s'il peut.
      */
-    public static void seDeplacer(Joueur joueur, Joueur[] joueurs, String direction, String[][] plateau) {
+    public static boolean seDeplacer(Joueur joueur, Joueur[] joueurs, String direction, String[][] plateau) {
         // Stocker les coordonnées du nouveau déplacement pour le joueur
         int nouvelleLigne = joueur.ligne;
         int nouvelleColonne = joueur.colonne;
@@ -38,7 +38,7 @@ public class deplacerJoueur {
         // Si la direction n'est pas valide
         else {
             System.out.println("Direction non valide !");
-            return;
+            return false;
         }
 
         // Vérifier si les nouvelles coordonnées sont valides et si la case est vide
@@ -56,56 +56,54 @@ public class deplacerJoueur {
                 // Déplacer le joueur
                 joueur.ligne = nouvelleLigne;
                 joueur.colonne = nouvelleColonne;
+                return true;
             } else {
                 System.out.println("Il y a déjà un joueur sur cette case !");
+                return false;
             }
         } else {
             System.out.println("Déplacement impossible !");
+            return false;
         }
     }
     
     public static boolean verifDeplacement(Joueur[] joueurs, String[][] plateau, Joueur joueur) {
-         // Stocker les coordonnées du nouveau déplacement pour le joueur
-         int nouvelleLigne = joueur.ligne;
-         int nouvelleColonne = joueur.colonne;
-          
-        // Vérifier si les nouvelles coordonnées sont valides et si la case est vide
-        if (nouvelleLigne >= 0 && nouvelleLigne < Plateau.HAUTEUR &&
-            nouvelleColonne >= 0 && nouvelleColonne < Plateau.LARGEUR &&
-            plateau[nouvelleLigne][nouvelleColonne].equals("   ")
-        ) {
-            // // Vérifier si un autre joueur occupe déjà la case
-            boolean caseOccupee = false;
-            // for (Joueur autreJoueur : joueurs) {
-            //     if (autreJoueur.ligne == nouvelleLigne && autreJoueur.colonne == nouvelleColonne) {
-            //         caseOccupee = true;
-            //         break;
-            //     }
-            // }
-
-            // Vérifier si un autre joueur occupe déjà la case
-            for (int[] coJoueur : coordonees.recupererCoordonnees(joueurs)) {
-
-                System.out.println(Arrays.toString(joueurs));
-                System.out.println(coJoueur[0] == nouvelleLigne);
-                System.out.println(coJoueur[1] == nouvelleColonne);
-                if(coJoueur[0] == nouvelleLigne && coJoueur[1] == nouvelleColonne){
-                    caseOccupee = true;
-                    break;
+        // Définir les déplacements possibles : haut, bas, gauche, droite
+        int[][] deplacements = {
+            {-1, 0}, // haut
+            {1, 0},  // bas
+            {0, -1}, // gauche
+            {0, 1}   // droite
+        };
+    
+        // Parcourir chaque déplacement possible
+        for (int[] dep : deplacements) {
+            int nouvelleLigne = joueur.ligne + dep[0];
+            int nouvelleColonne = joueur.colonne + dep[1];
+    
+            // Vérifier si les nouvelles coordonnées sont dans les limites du plateau
+            if (nouvelleLigne >= 0 && nouvelleLigne < Plateau.HAUTEUR &&
+                nouvelleColonne >= 0 && nouvelleColonne < Plateau.LARGEUR) {
+                // Vérifier si la case est vide
+                if (plateau[nouvelleLigne][nouvelleColonne].equals("   ")) {
+                    // Vérifier si un autre joueur occupe déjà la case
+                    boolean caseOccupee = false;
+                    for (Joueur autreJoueur : joueurs) {
+                        if (autreJoueur.ligne == nouvelleLigne && autreJoueur.colonne == nouvelleColonne) {
+                            caseOccupee = true;
+                            break; // Sortir de la boucle si une case occupée est trouvée
+                        }
+                    }
+                    if (!caseOccupee) {
+                        // Au moins une case adjacente est libre et non occupée
+                        return true;
+                    }
                 }
             }
-            
-            
-            if (!caseOccupee) {
-                return true; // Indiquer que le déplacement est réussi
-            } else {
-                System.out.println("Il y a déjà un joueur sur cette case !");
-                return false; // Indiquer que le déplacement n'est pas possible
-            }
-        } else {
-            System.out.println("Déplacement impossible !");
-            return false; // Indiquer que le déplacement n'est pas possible
         }
-    }
     
+        // Si on arrive ici, aucune case adjacente n'est libre et non occupée
+        System.out.println("Déplacement impossible sur les cases adjacentes !");
+        return false;
+    }
 }

@@ -7,7 +7,7 @@ public class Joueur {
      */
 
     // définition de la varible enVie
-    public static boolean enVie = true;
+    public boolean enVie = true;
     public String nom;
     public int colonne;
     public int ligne;
