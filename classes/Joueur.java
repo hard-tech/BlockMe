@@ -8,7 +8,7 @@ public class Joueur {
 
     // définition de la varible enVie
     public static boolean enVie = true;
-    public static String nom;
+    public String nom;
     public int colonne;
     public int ligne;
     private static final String[] nomsPotentiels = {"Syndra", "Teemo", "Warwick", "Maitre Yi", "Queen", "Lux", "Brand", "Fizz", "Kassadin", "Yasuo", "Rengar", "Katarina", "Kayle", "Illaoi", "Trundle"};
