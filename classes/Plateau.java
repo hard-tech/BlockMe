@@ -3,9 +3,7 @@
  * pour initialiser et afficher le plateau de jeu.
  */
 package classes;
-
 import fonctions.coordonees;
-
 /**
  * La classe "plateau" n'est pas définie dans le code fourni.
  */
@@ -21,6 +19,7 @@ public class Plateau{
      * La fonction PlateauDeJeu initialise un plateau de jeu avec des espaces vides et définit les positions des
      * joueurs ou des obstacles.
      */
+  
     public static void initialisationPlateauDeJeu(int nombreDeJoueurs, Joueur[] joueurs) {
         // Initialisation du plateau avec des cases vides
         for (int i = 0; i < HAUTEUR; i++) {
@@ -44,6 +43,7 @@ public class Plateau{
             plateau[4][5] = " 1 "; // Joueur 1
             plateau[5][6] = " 2 "; // Joueur 2
             plateau[5][4] = " 3 "; // Joueur 3
+
 
             joueurs[0].ligne = 4; joueurs[0].colonne = 5;
             joueurs[1].ligne = 5; joueurs[1].colonne = 6;

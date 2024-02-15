@@ -57,7 +57,7 @@ public class Main {
             
             // Clear le terminal
             System.out.print("\033[H\033[2J");
-
+          
             if (choix.equals("1")) { // Si l'utilisateur saisit le jeu
                 jouer.jouer(entre); // Lancer le jeu
                 choix = ""; // Réinitialise la variable de choix à une chaîne vide   
