@@ -19,4 +19,14 @@ public class Joueur {
         int choix = (int) (Math.random() * nomsPotentiels.length);
         return nomsPotentiels[choix];
     }
+
+    public boolean EasterEgg(){
+        if (this.colonne==10 && this.ligne==0){
+            System.out.println("Clement est vraiment le plus beaux");
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
 }

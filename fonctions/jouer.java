@@ -42,6 +42,7 @@ public class jouer {
         int nombreDeJoueursEnVie;
         int[] destinationCaseDetruite = new int[2];
         String[] nomActuelJoueur;
+        String nombreDeJoueursVoulu;
 
         Joueur[] joueurs;
         /**
@@ -51,6 +52,7 @@ public class jouer {
         nombreDeJoueursVoulu = entre.next(); // Lire l'entrée utilisateur
         entre.nextLine();
         if (verificateur.verifChiffreEnEntre(2, 4, nombreDeJoueursVoulu)) {
+            boolean easterEgg;
             nombreDeJoueurs = Integer.parseInt(nombreDeJoueursVoulu);
             nombreDeJoueursEnVie = nombreDeJoueurs;
             joueurs = new Joueur[nombreDeJoueurs]; // Initialisation du tableau de joueurs avec la taille appropriée
@@ -92,12 +94,22 @@ public class jouer {
             Plateau.initialisationPlateauDeJeu(nombreDeJoueurs, joueurs); // initialisation du plateau de jeu
             Plateau.afficherPlateau();
             
-            while (nombreDeJoueursEnVie >= 2) {// Chaquue tour tout les joueurs vons être ammené à ce déplacer
+            while (nombreDeJoueursEnVie > 1) {// Chaquue tour tout les joueurs vons être ammené à ce déplacer
                 for (int i = 0; i < nombreDeJoueurs; i++) {
-    
                     String directionDeplacement = "";
                     boolean caseDetruite = false;
-    
+
+                    for (int j = 0; j < nombreDeJoueurs; j++) {
+                        easterEgg = joueurs[j].EasterEgg(); 
+                        for (int k = 0; k < nombreDeJoueurs; k++) {
+                            if (easterEgg){
+                                if (!joueurs[k].EasterEgg()) {
+                                    joueurs[k].enVie = false;
+                                }
+                            }
+                        }
+                    }
+                    
                     if(deplacerJoueur.verifDeplacement(joueurs, Plateau.plateau, joueurs[i]) && joueurs[i].enVie) {
                         do{
                             // Nettoyage des coordonnées du plateau de jeu (avant déplacement)
@@ -169,7 +181,9 @@ public class jouer {
                             System.out.println(nombreDeJoueursEnVie);
                         }
                     }else{
-                        joueurs[i].enVie = false;
+                        if (joueurs[i].EasterEgg()) {
+                            joueurs[i].enVie = false;
+                        }
                     }
     
                     // System.out.print("\033[H\033[2J");
