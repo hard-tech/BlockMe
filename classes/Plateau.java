@@ -93,8 +93,39 @@ public class Plateau{
     /**
      * La fonction "afficherPlateau" imprime un plateau de jeu avec une bordure à double ligne.
      */
-    public static void afficherPlateau() {
-        // Imprimer les indices de colonne (lettres A-J)
+    public static void afficherPlateau(Joueur joueur) {
+    // Afficher le nom du joueur en ASCII art
+    System.out.println("       ---------------------------------");
+    System.out.println("       |                               |");
+    System.out.println("       |    C'est au tour du joueur    |");
+    
+    // Calculer la largeur maximale disponible pour le nom
+    int maxWidth = 33; // Largeur maximale disponible pour le nom du joueur
+    
+    // Si le nom du joueur dépasse la largeur maximale, le tronquer
+    String nomJoueur = joueur.nom;
+    if (nomJoueur.length() > maxWidth - 18) {
+        nomJoueur = nomJoueur.substring(0, maxWidth - 21) + "...";
+    }
+    
+    // Centrer le nom du joueur dans la ligne
+    int espaceGauche = (maxWidth - nomJoueur.length()) / 2;
+    int espaceDroite = maxWidth - nomJoueur.length() - espaceGauche;
+    System.out.print("       |");
+    for (int i = 0; i < espaceGauche - 2; i++) {
+        System.out.print(" ");
+    }
+    System.out.print(nomJoueur);
+    for (int i = 0; i < espaceDroite; i++) {
+        System.out.print(" ");
+    }
+    System.out.println("|");
+
+    System.out.println("       |         de jouer !            |");
+    System.out.println("       |                               |");
+    System.out.println("       ---------------------------------");
+
+    // Imprimer les indices de colonne (lettres A-J)
     System.out.print("    "); // Espaces pour aligner avec les cases du plateau
     for (char lettre = 'A'; lettre < 'A' + LARGEUR; lettre++) {
         System.out.print(" " + lettre + "  "); // Imprimer les lettres pour les colonnes
