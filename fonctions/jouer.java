@@ -15,9 +15,9 @@ public class jouer {
 
         String nombreDeJoueursVoulu = "";
         // liste des différent nom de ligne (de A à K)
-        String[] nomsDeColonne = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K"};
+        String[] nomsColonne = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K"};
         // liste des différent nom de colonne (de A à K)
-        String[] nomsDeLigne = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"};
+        String[] nomsLigne = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"};
         int nombreDeJoueurs = 0;
         int[] destinationCaseDetruite = new int[2];
         String[] nomActuelJoueur;
@@ -93,31 +93,41 @@ public class jouer {
                     //afficher le plateau de jeu
                     Plateau.afficherPlateau();
                     while (!caseDetruite) {
-                        String positionCase1 = "";
-                        boolean choixCase1 = false;
-                        //tant que positionCase1 n'est pas present dans nomsDeColonne demander sur quelle ligne se trouve la case que le joueur veux detruire ?
-                        while (!choixCase1) {
+                        String positionCase = "";
+                        boolean ligneValide = false;
+                        boolean colonneValide = false;
+
+                        //tant que positionCase1 n'est pas present dans nomsColonne demander sur quelle ligne se trouve la case que le joueur veux detruire ?
+                        while (!ligneValide && !colonneValide) {
                             System.out.println("Dans quelle colonne se trouve la case que vous voulez détruire ? :");
-                            positionCase1 = entre.nextLine(); // Lire l'entrée utilisateur
-                            for (int j = 0; j < nomsDeColonne.length; j++) {
-                                if (nomsDeColonne[j].equals(positionCase1)) {// Si le nom de la case est dans le tableau nomsDeColonne, le joueur choisit la colonne avec la cases a detruire
-                                    destinationCaseDetruite[1] = j;
-                                    choixCase1 = true;
+                            
+                            positionCase = entre.nextLine(); // Lire l'entrée utilisateur
+                            positionCase = positionCase.toUpperCase(); // Convertir la positionCase en lower case
+                            
+                            String ligneCase = positionCase.split("")[1];
+                            String colonneCase = positionCase.split("")[0];
+                            
+                            for (int y = 0; y < nomsLigne.length; y++) {
+                                System.out.println(nomsLigne[y]);
+                                if (nomsLigne[y].equals(ligneCase)) {// Si le nom de la case est dans le tableau nomsColonne, le joueur choisit la colonne avec la cases a detruire
+                                    destinationCaseDetruite[0] = y;
+                                    ligneValide = true;
                                 }
                             }
-                        }
-                        String positionCase0 = "";
-                        boolean choixCase0 = false;
-                        //tant que positionCase0 n'est pas present dans nomsDeLigne demander sur quelle ligne se trouve la case que le joueur veux detruire ?
-                        while (!choixCase0) {
-                            System.out.println("Dans quelle ligne se trouve la case que vous voulez détruire ? :");
-                            positionCase0 = entre.nextLine(); // Lire l'entrée utilisateur
-                            for (int j = 0; j < nomsDeLigne.length; j++) {
-                                if (nomsDeLigne[j].equals(positionCase0)) {// Si le nom de la case est dans le tableau nomsDeLigne, le joueur choisit la ligne avec la cases a detruire
-                                    destinationCaseDetruite[0] = j;
-                                    choixCase0 = true;
+
+                            for (int x = 0; x < nomsColonne.length; x++) {
+                                System.out.println(nomsColonne[x]);
+                                if (nomsColonne[x].equals(colonneCase)) {// Si le nom de la case est dans le tableau nomsColonne, le joueur choisit la colonne avec la cases a detruire
+                                    destinationCaseDetruite[1] = x;
+                                    colonneValide = true;
                                 }
                             }
+
+                            System.out.println(ligneCase);
+                            System.out.println(ligneValide);
+
+                            System.out.println(colonneCase);
+                            System.out.println(colonneValide);
                         }
                         caseDetruite = Plateau.detruireCase(destinationCaseDetruite); // détruire la case de destination
                         if (!caseDetruite) {

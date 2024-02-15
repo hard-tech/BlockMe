@@ -94,51 +94,61 @@ public class Plateau{
      * La fonction "afficherPlateau" imprime un plateau de jeu avec une bordure à double ligne.
      */
     public static void afficherPlateau() {
-        // Imprimer la bordure supérieure double
-        System.out.print("╔");
-        for (int j = 0; j < LARGEUR; j++) {
-            System.out.print("═══");
-            if (j < LARGEUR - 1) {
-                System.out.print("╦"); // Jonction supérieure double
-            } else {
-                System.out.print("╗"); // Coin supérieur droit double
-            }
+        // Imprimer les indices de colonne (lettres A-J)
+    System.out.print("    "); // Espaces pour aligner avec les cases du plateau
+    for (char lettre = 'A'; lettre < 'A' + LARGEUR; lettre++) {
+        System.out.print(" " + lettre + "  "); // Imprimer les lettres pour les colonnes
+    }
+    System.out.println();
+
+    // Imprimer la bordure supérieure
+    System.out.print("   ╔");
+    for (int j = 0; j < LARGEUR; j++) {
+        System.out.print("═══");
+        if (j < LARGEUR - 1) {
+            System.out.print("╦");
+        } else {
+            System.out.print("╗");
         }
-        System.out.println();
-    
-        for (int i = 0; i < HAUTEUR; i++) {
-            System.out.print("║"); // Bordure latérale gauche double
+    }
+    System.out.println();
+
+    for (int i = 0; i < HAUTEUR; i++) {
+        // Imprimer l'indice de ligne (chiffre 1-11), ajuster l'espacement pour les nombres à deux chiffres
+        System.out.print((i + 1) + " ".repeat(Math.max(0, 3 - (int)(Math.log10(i + 1) + 1))) + "║");
+
+        for (int j = 0; j < LARGEUR; j++) {
+            // Modifier ici pour afficher le contenu de 'plateau[i][j]'
+            System.out.print(plateau[i][j] + "║"); // Espace ajouté pour alignement
+        }
+        System.out.println(); // Nouvelle ligne après chaque ligne du plateau
+
+        // Bordure inférieure ou intermédiaire
+        if (i < HAUTEUR - 1) {
+            System.out.print("   ╠");
             for (int j = 0; j < LARGEUR; j++) {
-                System.out.print(plateau[i][j] + "║");
-            }
-            System.out.println(); // Passer à la ligne suivante
-    
-            // Imprimer la séparation entre les lignes avec une double ligne ou préparer la bordure inférieure
-            if (i < HAUTEUR - 1) {
-                System.out.print("╠"); // Jonction latérale gauche double
-                for (int j = 0; j < LARGEUR; j++) {
-                    System.out.print("═══");
-                    if (j < LARGEUR - 1) {
-                        System.out.print("╬"); // Jonction centrale double
-                    } else {
-                        System.out.print("╣"); // Jonction latérale droite double
-                    }
+                System.out.print("═══");
+                if (j < LARGEUR - 1) {
+                    System.out.print("╬");
+                } else {
+                    System.out.print("╣");
                 }
-                System.out.println();
             }
+            System.out.println();
         }
-        
-        // Imprimer la bordure inférieure double
-        System.out.print("╚");
-        for (int j = 0; j < LARGEUR; j++) {
-            System.out.print("═══");
-            if (j < LARGEUR - 1) {
-                System.out.print("╩"); // Jonction inférieure double
-            } else {
-                System.out.print("╝"); // Coin inférieur droit double
-            }
+    }
+
+    // Bordure inférieure finale
+    System.out.print("   ╚");
+    for (int j = 0; j < LARGEUR; j++) {
+        System.out.print("═══");
+        if (j < LARGEUR - 1) {
+            System.out.print("╩");
+        } else {
+            System.out.print("╝");
         }
-        System.out.println();
+    }
+    System.out.println();
     }
 
     public static String[][] recuperePlateau() {
