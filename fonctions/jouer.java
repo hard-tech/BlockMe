@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Random;
 
 import classes.*;
 import fonctions.*;
@@ -51,6 +52,18 @@ public class jouer {
                 
                 System.out.println(joueurs[i].nom);
             }
+            // Melanger le tableau joueurs
+            Random rand = new Random();
+
+            for (int i = nombreDeJoueurs - 1; i > 0; i--) {
+                // Générer un index aléatoire entre 0 et i inclusivement
+                int j = rand.nextInt(i + 1);
+
+                // Échanger les éléments à l'index i et j
+                Joueur temp = joueurs[i];
+                joueurs[i] = joueurs[j];
+                joueurs[j] = temp;
+            }
 
             Plateau.initialisationPlateauDeJeu(nombreDeJoueurs, joueurs); // initialisation du plateau de jeu
             Plateau.afficherPlateau();
@@ -71,7 +84,7 @@ public class jouer {
                     Plateau.nettoyageCasePrecedente(joueurs);
 
                     // déplacer le joueur
-                    deplacerJoueur.seDeplacer(joueurs[i], joueurs, directionDeplacement);
+                    deplacerJoueur.seDeplacer(joueurs[i], joueurs, directionDeplacement, Plateau.recuperePlateau());
 
                     //mise à jour de la plateau de jeu
                     Plateau.miseAJourPlateauDeJeu(joueurs);

@@ -140,4 +140,8 @@ public class Plateau{
         }
         System.out.println();
     }
+
+    public static String[][] recuperePlateau() {
+        return plateau;
+    }
 }
