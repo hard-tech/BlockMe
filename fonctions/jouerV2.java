@@ -56,19 +56,29 @@ public class jouerV2 {
         //
         
         Plateau.initialisationPlateauDeJeu(nombreDeJoueurs, joueurs); // Initialiser le plateau de jeu
+        nombreDeJoueursEnVie = joueurs.length; // Initialiser le nombre de joueurs en vie
         
-        // Affichage des elements du jeu (de façon récurante)
-            System.out.print("\033[H\033[2J"); // Clear le terminal
+        while (nombreDeJoueursEnVie > 1) {
+            for (int i = 0; i < joueurs.length; i++) {
+                tourJoueur.tourJoueur(joueurs, i, entre); // Lancer DU joueur
 
-            Plateau.afficherPlateau(); // Afficher le plateau de jeu
-
-            // affichage du tableau de noms des joueurs
-                System.out.println("\n");
-                System.out.println("   ╔════════════════════════");
-                for (int i = 0; i < joueurs.length; i++) { // Gérer Le tableau contenant le noms des joueurs
-                    System.out.println("   ║  Joueur " + (i + 1) + " ── " + joueurs[i].nom); // Afficher le nom du joueur
-                }
-                System.out.println("   ╚════════════════════════");
-        //
+                if(!joueurs[i].enVie) { nombreDeJoueursEnVie--;} // Mise à jours du nombre de joeur en vie
+    
+                // Affichage des elements du jeu (de façon récurante)
+                    System.out.print("\033[H\033[2J"); // Clear le terminal
+    
+                    Plateau.afficherPlateau(); // Afficher le plateau de jeu
+    
+                    // affichage du tableau de noms des joueurs
+                        System.out.println("\n");
+                        System.out.println("   ╔════════════════════════════════════════════════");
+                        for (int x = 0; x < joueurs.length; x++) { // Gérer Le tableau contenant le noms des joueurs
+                          System.out.println("   ║  Joueur " + (x + 1) + " ── " + joueurs[x].nom + (joueurs[x].enVie ? "" : " est mort au combat ...")); // Afficher le nom du joueur
+                        }
+                        System.out.println("   ╚════════════════════════════════════════════════");
+                    //
+                //
+            }
+        }
     }
 }
