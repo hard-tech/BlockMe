@@ -48,7 +48,7 @@ public class jouer {
         */
         System.out.println("Veuillez saisir un nombre entre 2 et 4 : ");
         nombreDeJoueursVoulu = entre.next(); // Lire l'entrée utilisateur
-
+        entre.nextLine();
         if (verificateur.verifChiffreEnEntre(2, 4, nombreDeJoueursVoulu)) {
             nombreDeJoueurs = Integer.parseInt(nombreDeJoueursVoulu);
             joueurs = new Joueur[nombreDeJoueurs]; // Initialisation du tableau de joueurs avec la taille appropriée
@@ -106,7 +106,10 @@ public class jouer {
                     Plateau.nettoyageCasePrecedente(joueurs);
 
                     // déplacer le joueur
-                    deplacerJoueur.seDeplacer(joueurs[i], joueurs, directionDeplacement, Plateau.recuperePlateau());
+                    if (deplacerJoueur.verifDeplacement(joueurs, Plateau.recuperePlateau(), joueurs[i])){
+                        deplacerJoueur.verifDeplacement(joueurs, Plateau.recuperePlateau(), joueurs[i]);
+                        deplacerJoueur.seDeplacer(joueurs[i], joueurs, directionDeplacement, Plateau.recuperePlateau());
+                    }
 
                     //mise à jour de la plateau de jeu
                     Plateau.miseAJourPlateauDeJeu(joueurs);
