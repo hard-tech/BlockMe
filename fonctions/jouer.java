@@ -9,7 +9,27 @@ import java.util.Random;
 import classes.*;
 import fonctions.*;
 
+/**
+ * La classe jouer gère le déroulement d'un jeu de plateau. 
+ * Elle permet de configurer le jeu, de gérer les tours des joueurs, 
+ * et de mettre à jour le plateau de jeu après chaque action.
+ * Les joueurs peuvent se déplacer sur le plateau et détruire des cases 
+ * selon les règles définies.
+ */
+
+
 public class jouer {
+
+    /**
+     * Lance une session de jeu en demandant aux utilisateurs le nombre de joueurs,
+     * en initialisant le plateau de jeu, en gérant les tours des joueurs,
+     * et en permettant aux joueurs de se déplacer et de détruire des cases sur le plateau.
+     * La méthode gère également l'affichage du plateau et des messages à l'utilisateur.
+     * 
+     * @param entre L'objet Scanner utilisé pour lire les entrées de l'utilisateur.
+     */
+
+
     public static void jouer(Scanner entre) {
 
 
@@ -28,6 +48,7 @@ public class jouer {
         */
         System.out.println("Veuillez saisir un nombre entre 2 et 4 : ");
         nombreDeJoueursVoulu = entre.next(); // Lire l'entrée utilisateur
+
         if (verificateur.verifChiffreEnEntre(2, 4, nombreDeJoueursVoulu)) {
             nombreDeJoueurs = Integer.parseInt(nombreDeJoueursVoulu);
             joueurs = new Joueur[nombreDeJoueurs]; // Initialisation du tableau de joueurs avec la taille appropriée
@@ -96,37 +117,48 @@ public class jouer {
                         String positionCase = "";
                         boolean ligneValide = false;
                         boolean colonneValide = false;
-
-                        //tant que positionCase1 n'est pas present dans nomsColonne demander sur quelle ligne se trouve la case que le joueur veux detruire ?
-                        while (!ligneValide && !colonneValide) {
-                            System.out.println("Dans quelle colonne se trouve la case que vous voulez détruire ? :");
-                            
-                            positionCase = entre.nextLine(); // Lire l'entrée utilisateur
-                            positionCase = positionCase.toUpperCase(); // Convertir la positionCase en lower case
-                            
-                            String ligneCase = positionCase.split("")[1];
-                            String colonneCase = positionCase.split("")[0];
-                            
-                            for (int y = 0; y < nomsLigne.length; y++) {
-                                if (nomsLigne[y].equals(ligneCase)) {// Si le nom de la case est dans le tableau nomsColonne, le joueur choisit la colonne avec la cases a detruire
-                                    destinationCaseDetruite[0] = y;
-                                    ligneValide = true;
+                    
+                        while (!ligneValide || !colonneValide) {
+                            do {
+                                System.out.println("Dans quelle case voulez-vous détruire ? (Ex : B3) :");
+                                positionCase = entre.nextLine().toUpperCase(); // Lire et convertir l'entrée utilisateur en majuscules
+                        
+                                // Corrige l'expression régulière pour qu'elle accepte les chiffres de 1 à 9 et 10 après les lettres de A à K
+                            } while (!positionCase.matches("[ABCDEFGHIJK](10|[1-9])")); // Regex pour vérifier que la position est bien valide
+                        
+                            // Extraction de la colonne et de la ligne de façon à gérer correctement "10"
+                            String colonneCase = String.valueOf(positionCase.charAt(0));
+                            String ligneCase = positionCase.substring(1); // Maintenant cela fonctionne car l'expression régulière garantit une entrée valide
+                        
+                            // Vérification de la colonne
+                            for (String nomColonne : nomsColonne) {
+                                if (nomColonne.equals(colonneCase)) {
+                                    destinationCaseDetruite[1] = java.util.Arrays.asList(nomsColonne).indexOf(nomColonne);
+                                    colonneValide = true;
+                                    break;
                                 }
                             }
-
-                            for (int x = 0; x < nomsColonne.length; x++) {
-                                if (nomsColonne[x].equals(colonneCase)) {// Si le nom de la case est dans le tableau nomsColonne, le joueur choisit la colonne avec la cases a detruire
-                                    destinationCaseDetruite[1] = x;
-                                    colonneValide = true;
+                        
+                            // Vérification de la ligne
+                            for (String nomLigne : nomsLigne) {
+                                if (nomLigne.equals(ligneCase)) {
+                                    destinationCaseDetruite[0] = java.util.Arrays.asList(nomsLigne).indexOf(nomLigne);
+                                    ligneValide = true;
+                                    break;
                                 }
+                            }
+                        
+                            if (!ligneValide || !colonneValide) {
+                                System.out.println("Coordonnées invalides, veuillez réessayer.");
                             }
                         }
+                        
+                        // Supposons que Plateau.detruireCase est une méthode définie pour détruire la case
                         caseDetruite = Plateau.detruireCase(destinationCaseDetruite); // détruire la case de destination
                         if (!caseDetruite) {
-                            System.out.println("La case ne peut pas être détruite");
+                            System.out.println("La case ne peut pas être détruite, veuillez choisir une autre case.");
                         }
                     }
-
                     System.out.print("\033[H\033[2J");
 
                     Plateau.afficherPlateau(); // afficher le plateau de jeu
@@ -141,23 +173,6 @@ public class jouer {
 
         } else {
             System.out.println("Nombre de joueurs invalide !");
-        }
-
-        switch (nombreDeJoueurs) {
-            case 2:
-                // Jeu avec 2 joueurs  
-                System.out.println("Jeu avec 2 joueurs");
-                break;
-            case 3:
-                // Jeu avec 3 joueurs 
-                System.out.println("Jeu avec 3 joueurs");
-                break;
-            case 4:
-                // Jeu avec 4 joueurs 
-                System.out.println("Jeu avec 4 joueurs");
-                break;
-            default:
-                System.out.println("\n Nombre de joueurs invalide ! Nous ne pouvons pas lancer la partie!");
         }
         
         nombreDeJoueurs = 0; //definir la variable de nombre de joueurs voulu à une chaîne vide
