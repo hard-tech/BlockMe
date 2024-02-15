@@ -14,9 +14,9 @@ public class jouer {
 
 
         String nombreDeJoueursVoulu = "";
-        // liste des différent nom de ligne (de A à K)
-        String[] nomsColonne = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K"};
         // liste des différent nom de colonne (de A à K)
+        String[] nomsColonne = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K"};
+        // liste des différent nom de ligne (de A à K)
         String[] nomsLigne = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"};
         int nombreDeJoueurs = 0;
         int[] destinationCaseDetruite = new int[2];
@@ -108,7 +108,6 @@ public class jouer {
                             String colonneCase = positionCase.split("")[0];
                             
                             for (int y = 0; y < nomsLigne.length; y++) {
-                                System.out.println(nomsLigne[y]);
                                 if (nomsLigne[y].equals(ligneCase)) {// Si le nom de la case est dans le tableau nomsColonne, le joueur choisit la colonne avec la cases a detruire
                                     destinationCaseDetruite[0] = y;
                                     ligneValide = true;
@@ -116,18 +115,11 @@ public class jouer {
                             }
 
                             for (int x = 0; x < nomsColonne.length; x++) {
-                                System.out.println(nomsColonne[x]);
                                 if (nomsColonne[x].equals(colonneCase)) {// Si le nom de la case est dans le tableau nomsColonne, le joueur choisit la colonne avec la cases a detruire
                                     destinationCaseDetruite[1] = x;
                                     colonneValide = true;
                                 }
                             }
-
-                            System.out.println(ligneCase);
-                            System.out.println(ligneValide);
-
-                            System.out.println(colonneCase);
-                            System.out.println(colonneValide);
                         }
                         caseDetruite = Plateau.detruireCase(destinationCaseDetruite); // détruire la case de destination
                         if (!caseDetruite) {
@@ -150,8 +142,6 @@ public class jouer {
         } else {
             System.out.println("Nombre de joueurs invalide !");
         }
-
-        System.out.println(nombreDeJoueurs);
 
         switch (nombreDeJoueurs) {
             case 2:

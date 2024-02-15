@@ -13,8 +13,6 @@ public class deplacerJoueur {
         int nouvelleLigne = joueur.ligne;
         int nouvelleColonne = joueur.colonne;
 
-        System.out.println(direction);
-
         // Si la direction est vers le haut ("z")
         if (direction.equals("z")) {
             nouvelleLigne--; // Déplacer vers le haut
