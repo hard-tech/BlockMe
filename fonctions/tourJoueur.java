@@ -21,6 +21,7 @@ public class tourJoueur {
         do{
             Plateau.nettoyageCasePrecedente(joueurs); // Nettoyage des coordonnées du plateau de jeu (avant déplacement)
             System.out.println("Dans quelle direction voulez vous vous déplacer '"+ joueurs[joueurIndex].nom +"' ? :");
+            System.out.println(directionDeplacement);
             directionDeplacement = entre.nextLine().toLowerCase(); // Lire l'entrée utilisateur
             
         }while(!deplacerJoueur.seDeplacer(joueurs[joueurIndex], joueurs, directionDeplacement, Plateau.recuperePlateau())); // redemmander à l'utilisateur vers qu'elle dirrection veut'il se déplacer temps que la dirrection est interdite ou invalid
@@ -34,7 +35,7 @@ public class tourJoueur {
         
             while (!ligneValide || !colonneValide) {
                 do {
-                    System.out.println("Quelle case voulez-vous détruire ? (Ex : B3) :");
+                    System.out.println("\nQuelle case voulez-vous détruire ? (Ex : B3) :");
                     positionCase = entre.nextLine().toUpperCase(); // Lire et convertir l'entrée utilisateur en majuscules
             
                     // Corrige l'expression régulière pour qu'elle accepte les chiffres de 1 à 9 et 10 après les lettres de A à K

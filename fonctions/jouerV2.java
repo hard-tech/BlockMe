@@ -59,6 +59,7 @@ public class jouerV2 {
         
         Plateau.initialisationPlateauDeJeu(nombreDeJoueurs, joueurs); // Initialiser le plateau de jeu
         nombreDeJoueursEnVie = joueurs.length; // Initialiser le nombre de joueurs en vie
+        entre.nextLine(); // Ceci consomme et ignore l'\n restant dans le tampon donc ont l'utilise
         
         while (nombreDeJoueursEnVie > 1) {
             for (int i = 0; i < joueurs.length; i++) {    
