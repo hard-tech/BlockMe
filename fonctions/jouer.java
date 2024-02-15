@@ -53,9 +53,14 @@ public class jouer {
             nombreDeJoueurs = Integer.parseInt(nombreDeJoueursVoulu);
             joueurs = new Joueur[nombreDeJoueurs]; // Initialisation du tableau de joueurs avec la taille appropriée
             nomActuelJoueur = new String[nombreDeJoueurs];
+            ArrayList<String> nomJoueurSauv = new ArrayList<>();
             
             //pour chaque joueur creer un joueur avec un nom different des autres
             // Boucle pour chaque joueur
+            Joueur[] joueurExistant= Joueur.chargerJoueur("objets.ser"); // chargement du fichier
+            for (int j = 0; j < joueurExistant.length; j++) {
+                nomJoueurSauv.add(joueurExistant[j].nom);
+            }
             for (int i = 0; i < nombreDeJoueurs; i++) {
                 joueurs[i] = new Joueur(); // Initialisation de chaque joueur
                 joueurs[i].nom = Joueur.choisirNomPotentiel(); // Choisir le nom du joueur
@@ -66,6 +71,21 @@ public class jouer {
                 // Si le nom du joueur est déjà pris, choisir un nouveau nom
                 while (nomsListe.contains(joueurs[i].nom)) {
                     joueurs[i].nom = Joueur.choisirNomPotentiel();
+                }
+                if (nomJoueurSauv.contains(joueurs[i].nom)) {
+                    joueurs[i] = joueurExistant[nomJoueurSauv.indexOf(joueurs[i].nom)];
+                }
+                else{
+                    int nouvelleTaille = joueurExistant.length + 1;
+                    Joueur[] nouveauTableau = new Joueur[nouvelleTaille];
+                    // Copie des éléments du tableau existant dans le nouveau tableau
+                    for (int j = 0; j < joueurExistant.length; j++) {
+                        nouveauTableau[j] = joueurExistant[j];
+                    }
+                    // Ajout de la nouvelle valeur à la fin du nouveau tableau
+                    nouveauTableau[nouvelleTaille - 1] = joueurs[i];
+                    //Remplacer l'ancien tableau par le nouveau tableau
+                    joueurExistant = nouveauTableau;
                 }
                 
                 // Ajouter le nom du joueur à la liste
@@ -92,6 +112,7 @@ public class jouer {
 
             for (int i = 0; i < nombreDeJoueurs; i++) {
                 Plateau.afficherPlateau(joueurs[i]); // affichage du plateau de jeu
+                Joueur.sauvegarderJoueur(joueurExistant, "objets.ser"); // sauvegarde des scores dans le fichier
 
                 String directionDeplacement = "";
                 boolean caseDetruite = false;

@@ -1,74 +1,50 @@
 package classes;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 
-public class Joueur {
+public class Joueur implements Serializable { // Implémentation pour une sérialisation
 
-    /*
-     * Création du tableau contenant une liste des noms potentiels des joueurs
-     */
+    // Définition des variables
+    public static boolean enVie = true; // Variable statique pour suivre l'état de vie des joueurs
+    public String nom; // Le nom du joueur
+    public int colonne; // La colonne actuelle du joueur
+    public int ligne; // La ligne actuelle du joueur
+    public int score; // Le score du joueur
+    private static final String[] nomsPotentiels = {"Syndra", "Teemo", "Warwick", "Maitre Yi", "Queen", "Lux", "Brand", "Fizz", "Kassadin", "Yasuo", "Rengar", "Katarina", "Kayle", "Illaoi", "Trundle"}; // Liste des noms potentiels pour les joueurs
 
-    // définition de la varible enVie
-    public static boolean enVie = true;
-    public String nom;
-    public int colonne;
-    public int ligne;
-    public int score;
-    private static final String[] nomsPotentiels = {"Syndra", "Teemo", "Warwick", "Maitre Yi", "Queen", "Lux", "Brand", "Fizz", "Kassadin", "Yasuo", "Rengar", "Katarina", "Kayle", "Illaoi", "Trundle"};
-
-    
-    // choisir dans la liste des noms potentiels un nom au hazard
+    // Choisir dans la liste des noms potentiels un nom au hasard
     public static String choisirNomPotentiel() {
-        int choix = (int) (Math.random() * nomsPotentiels.length);
-        return nomsPotentiels[choix];
+        int choix = (int) (Math.random() * nomsPotentiels.length); // Génère un indice aléatoire
+        return nomsPotentiels[choix]; // Retourne un nom aléatoire
     }
 
-    public static void sauvegarderScores(Joueur[] joueurs, String nomFichier) {
-        ArrayList<String> lignes = new ArrayList<>();
-
-        // Lire les lignes existantes
-        try (BufferedReader reader = new BufferedReader(new FileReader(nomFichier))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                lignes.add(line);
+    // Fonction qui sauvegarde les objets dans un fichier
+    public static void sauvegarderJoueur(Joueur[] joueurs, String nomFichier) {
+        try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(nomFichier))) {
+            for (int i = 0; i < joueurs.length; i++) {
+                outputStream.writeObject(joueurs[i]); // Écrit chaque joueur dans le fichier
             }
         } catch (IOException e) {
-            System.err.println("Erreur lors de la lecture du fichier : " + e.getMessage());
+            e.printStackTrace(); // En cas d'erreur, affiche la trace de l'exception
         }
-
-        // Mettre à jour les scores des joueurs existants ou ajouter de nouveaux joueurs
-        for (Joueur joueur : joueurs) {
-            boolean joueurExistant = false;
-            for (int i = 0; i < lignes.size(); i++) {
-                if (lignes.get(i).startsWith("Nom du joueur : " + joueur.nom)) {
-                    // Mise à jour du score du joueur existant
-                    lignes.set(i + 1, "Score du joueur : " + joueur.score);
-                    joueurExistant = true;
-                    break;
+    }
+    
+    // Fonction qui charge les objets sérialisés d'un fichier peu importe le nombre d'objets dans le fichier
+    public static Joueur[] chargerJoueur(String nomFichier) {
+        ArrayList<Joueur> joueurs = new ArrayList<>(); // Crée une liste pour stocker les joueurs
+        try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(nomFichier))) {
+            while (true) {
+                try {
+                    Joueur joueur = (Joueur) inputStream.readObject(); // Lit chaque joueur du fichier
+                    joueurs.add(joueur); // Ajoute le joueur à la liste
+                } catch (EOFException e) {
+                    break; // Fin du fichier atteinte
                 }
             }
-            if (!joueurExistant) {
-                // Ajouter une nouvelle entrée pour le joueur
-                lignes.add("Nom du joueur : " + joueur.nom);
-                lignes.add("Score du joueur : " + joueur.score);
-                lignes.add("---------------------");
-            }
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace(); // En cas d'erreur, affiche la trace de l'exception
         }
-
-        // Écrire les lignes mises à jour dans le fichier
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(nomFichier))) {
-            for (String line : lignes) {
-                writer.write(line);
-                writer.newLine();
-            }
-            System.out.println("Les scores ont été sauvegardés avec succès dans le fichier : " + nomFichier);
-        } catch (IOException e) {
-            System.err.println("Erreur lors de l'écriture dans le fichier : " + e.getMessage());
-        }
+        return joueurs.toArray(new Joueur[joueurs.size()]); // Retourne la liste des joueurs sous forme de tableau
     }
 }
