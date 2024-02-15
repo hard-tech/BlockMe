@@ -29,7 +29,10 @@ public class jouerV2 {
 
     public static void jouer(Scanner entre) {
         
-        String[] NOMS_COLONNE = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K"}, NOMS_LIGNE = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"}, nomDesJoueurs; // initialiser les variables de type String[] pour le fonctionnement du jeu
+        String[] 
+            NOMS_COLONNE = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K"}, // Déclaration d'une constante de type STRING (qui nous permettra de vérifier si les coorrodonners donnes sont valide)
+            NOMS_LIGNE = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"}, // Déclaration d'une constante de type STRING (qui nous permettra de vérifier si les coorrodonners donnes sont valide)
+            nomDesJoueurs; // initialiser les variables de type String[] pour le fonctionnement du jeu
         String nombreDeJoueursVoulu = ""; // initialiser la variable de nombre de joueurs voulu par le joueur (avant vérification du contenue de la variable)
         
         int nombreDeJoueurs = 0, nombreDeJoueursEnVie; // initialiser les variables de nombre de joueurs et nombre de joueurs en vie
@@ -53,31 +56,42 @@ public class jouerV2 {
             joueurs = new Joueur[nombreDeJoueurs]; // Instancier un tableau contenant les joueurs
             nomDesJoueurs = new String[nombreDeJoueurs]; // Instancier un tableau contenant les noms des joueurs
             generationJoueurs.generationJoueurs(nomDesJoueurs, nombreDeJoueurs, joueurs); // Générer les joueurs
-        //
         
         Plateau.initialisationPlateauDeJeu(nombreDeJoueurs, joueurs); // Initialiser le plateau de jeu
         nombreDeJoueursEnVie = joueurs.length; // Initialiser le nombre de joueurs en vie
         
         while (nombreDeJoueursEnVie > 1) {
-            for (int i = 0; i < joueurs.length; i++) {
-                tourJoueur.tourJoueur(joueurs, i, entre); // Lancer DU joueur
-
-                if(!joueurs[i].enVie) { nombreDeJoueursEnVie--;} // Mise à jours du nombre de joeur en vie
-    
+            for (int i = 0; i < joueurs.length; i++) {    
                 // Affichage des elements du jeu (de façon récurante)
                     System.out.print("\033[H\033[2J"); // Clear le terminal
-    
                     Plateau.afficherPlateau(); // Afficher le plateau de jeu
-    
-                    // affichage du tableau de noms des joueurs
-                        System.out.println("\n");
-                        System.out.println("   ╔════════════════════════════════════════════════");
-                        for (int x = 0; x < joueurs.length; x++) { // Gérer Le tableau contenant le noms des joueurs
-                          System.out.println("   ║  Joueur " + (x + 1) + " ── " + joueurs[x].nom + (joueurs[x].enVie ? "" : " est mort au combat ...")); // Afficher le nom du joueur
-                        }
-                        System.out.println("   ╚════════════════════════════════════════════════");
-                    //
-                //
+
+                for (Joueur joueur : joueurs) {
+                    if(deplacerJoueur.verifDeplacementBloquer(joueurs, Plateau.plateau, joueur)){ joueur.enVie = false; } // virification de la posibilité de déplacement du joueurs (si non il est mort)
+                }
+                
+                nombreDeJoueursEnVie = 0; // remise à 0 du nombre de joueurs en vie pour le comptage
+                for (Joueur joueur : joueurs) { 
+                    if(joueur.enVie) { nombreDeJoueursEnVie++; } 
+                }// Mise à jours du nombre de joeur en vie
+                
+                System.out.println("alive : " + nombreDeJoueursEnVie);
+                for (Joueur joueur : joueurs) {
+                    System.out.println(joueur.nom);
+                    System.out.println(joueur.enVie);
+                }
+                
+                // affichage du tableau de noms des joueurs
+                    System.out.println("\n\n");
+                    System.out.println("   ╔════════════════════════════════════════════════");
+                    for (int x = 0; x < joueurs.length; x++) { // Gérer Le tableau contenant le noms des joueurs
+                      System.out.println("   ║  Joueur " + (x + 1) + " ── " + joueurs[x].nom + (joueurs[x].enVie ? "" : " est mort au combat ... looser")); // Afficher le nom du joueur
+                    }
+                    System.out.println("   ╚════════════════════════════════════════════════ \n\n");
+
+                if(joueurs[i].enVie){ tourJoueur.tourJoueur(joueurs, i, entre); } // Lancer DU joueur
+
+
             }
         }
     }

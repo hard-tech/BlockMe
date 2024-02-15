@@ -10,7 +10,6 @@ public class Main {
 
         // Créer un Scanner pour la saisie utilisateur
         Scanner entre = new Scanner(System.in);
-
         String choix = ""; // Initialise la variable de choix à une chaîne vide
 
      
@@ -21,6 +20,8 @@ public class Main {
         // Boucle principale du programme
         while (!choix.equals("4")) {
 
+            System.out.print("\033[H\033[2J"); // Clear le terminal
+            
             // Afficher le titre du jeu
             System.out.print("" +
                     "\n" +
