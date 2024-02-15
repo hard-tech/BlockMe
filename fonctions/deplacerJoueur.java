@@ -2,6 +2,7 @@ package fonctions;
 
 import classes.Joueur;
 import classes.Plateau;
+import fonctions.coordonees;
 
 public class deplacerJoueur {
     /**
@@ -11,6 +12,8 @@ public class deplacerJoueur {
         // Stocker les coordonnées du nouveau déplacement pour le joueur
         int nouvelleLigne = joueur.ligne;
         int nouvelleColonne = joueur.colonne;
+
+        System.out.println(direction);
 
         // Si la direction est vers le haut ("z")
         if (direction.equals("z")) {
@@ -40,10 +43,9 @@ public class deplacerJoueur {
             plateau[nouvelleLigne][nouvelleColonne].equals("   ")) {
             // Vérifier si un autre joueur occupe déjà la case
             boolean caseOccupee = false;
-            for (Joueur autreJoueur : joueurs) {
-                if (autreJoueur != joueur && autreJoueur.ligne == nouvelleLigne && autreJoueur.colonne == nouvelleColonne) {
+            for (int[] coJoueur : coordonees.recupererCoordonnees(joueurs)) {
+                if(coJoueur[0] == nouvelleLigne && coJoueur[1] == nouvelleColonne){
                     caseOccupee = true;
-                    break;
                 }
             }
             if (!caseOccupee) {

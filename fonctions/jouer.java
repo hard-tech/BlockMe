@@ -75,6 +75,7 @@ public class jouer {
                     while (!directionDeplacement.equals("z") && !directionDeplacement.equals("s") && !directionDeplacement.equals("q") && !directionDeplacement.equals("d")){
                         System.out.println("Dans quelle direction voulez vous vous déplacer ? :");
                         directionDeplacement = entre.nextLine(); // Lire l'entrée utilisateur
+                        directionDeplacement = directionDeplacement.toLowerCase(); // Convertir la direction en lower case
                     }
 
                     // Clear le terminal
