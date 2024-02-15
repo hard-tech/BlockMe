@@ -33,7 +33,7 @@ public class jouer {
     public static void jouer(Scanner entre) {
 
 
-        String nombreDeJoueursVoulu = "";
+        
         // liste des différent nom de colonne (de A à K)
         String[] nomsColonne = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K"};
         // liste des différent nom de ligne (de A à K)
@@ -108,12 +108,9 @@ public class jouer {
                             directionDeplacement = directionDeplacement.toLowerCase(); // Convertir la direction en lower case
                         }while (!deplacerJoueur.seDeplacer(joueurs[i], joueurs, directionDeplacement, Plateau.recuperePlateau()));
         
-                        // Clear le terminal
-                        System.out.print("\033[H\033[2J");
-        
                         // mise à jour de la plateau de jeu
                         Plateau.miseAJourPlateauDeJeu(joueurs);
-        
+                        System.out.print("\033[H\033[2J");
                         // afficher le plateau de jeu
                         Plateau.afficherPlateau();
                         while (!caseDetruite) {
@@ -162,24 +159,22 @@ public class jouer {
                                 System.out.println("La case ne peut pas être détruite, veuillez choisir une autre case.");
                             }
                         }
-        
+                        System.out.print("\033[H\033[2J");
+                        for (Joueur joueur : joueurs) {
+                            if(!joueur.enVie) {
+                                nombreDeJoueursEnVie--;
+                                System.out.println(joueur.nom + " t'es mort looser! LOL");
+                            }
+                            System.out.println(joueur.enVie);
+                            System.out.println(nombreDeJoueursEnVie);
+                        }
                     }else{
                         joueurs[i].enVie = false;
                     }
     
-                    System.out.print("\033[H\033[2J");
-    
-    
+                    // System.out.print("\033[H\033[2J");
     
                     Plateau.afficherPlateau(); // afficher le plateau de jeu
-
-                    for (Joueur joueur : joueurs) {
-                        if(!joueur.enVie) {
-                            nombreDeJoueursEnVie--;
-                        }
-                        System.out.println(joueur.enVie);
-                        System.out.println(nombreDeJoueursEnVie);
-                    }
                 }
     
                 // Clear le terminal

@@ -29,20 +29,20 @@ public class Main {
                     " |  _ \\| |/ _ \\ / __| |/ / |\\/| |/ _ \\\n" +
                     " | |_) | | (_) | (__|   <| |  | |  __/\n" +
                     " |____/|_|\\___/ \\___|_|\\_\\_|  |_|\\___|\n" +
-                    "            ||          ||             \n"
+                    "             │           │             \n"
             );
 
             // Afficher le menu principal
             System.out.print("" +
-                    "            ||          ||     \n" +
-                    "        ====================== \n" +
-                    "        ||                  || \n" +
-                    "        ||    1 - Jouer     || \n" +
-                    "        ||    2 - Règles    || \n" +
-                    "        ||    3 - Scores    || \n" +
-                    "        ||    4 - Quitter   || \n" +
-                    "        ||                  || \n" +
-                    "        ====================== \n"
+                    "             │           │     \n" +
+                    "        ┌────────────────────┐ \n" +
+                    "        │                    │ \n" +
+                    "        │     1 - Jouer      │ \n" +
+                    "        │     2 - Règles     │ \n" +
+                    "        │     3 - Scores     │ \n" +
+                    "        │     4 - Quitter    │ \n" +
+                    "        │                    │ \n" +
+                    "        └────────────────────┘ \n"
             );
 
             // Tant que l'utilisateur ne saisit pas une option valide, demander à nouveau
@@ -59,7 +59,7 @@ public class Main {
             System.out.print("\033[H\033[2J");
           
             if (choix.equals("1")) { // Si l'utilisateur saisit le jeu
-                jouer.jouer(entre); // Lancer le jeu
+                jouerV2.jouer(entre); // Lancer le jeu
                 choix = ""; // Réinitialise la variable de choix à une chaîne vide   
             }
 
@@ -69,7 +69,8 @@ public class Main {
             }
 
             if (choix.equals("3")) { // Si l'utilisateur saisit les règles
-                Scores.afficherScores(); // Afficher les scores
+                // Scores.afficherScores(); // Afficher les scores
+                System.out.println("Affichage des scores...");
                 choix = ""; // Réinitialise la variable de choix à une chaîne vide
             }
         }
