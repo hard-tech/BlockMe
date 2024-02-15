@@ -7,6 +7,16 @@ import classes.*;
 
 public class Main {
     public static void main(String[] args) {
+        Joueur[] joueurs = new Joueur[3]; // Initialise le tableau de joue
+        joueurs[0] = new Joueur(); // Initialisation de chaque joueur
+        joueurs[0].nom = Joueur.choisirNomPotentiel(); // Choisir le nom du joueur
+        joueurs[0].score = 1000;
+        joueurs[1] = new Joueur(); // Initialisation de chaque joueur
+        joueurs[1].nom = Joueur.choisirNomPotentiel(); // Choisir le nom du joueur
+        joueurs[1].score = 40;
+        joueurs[2] = new Joueur(); // Initialisation de chaque joueur
+        joueurs[2].nom = Joueur.choisirNomPotentiel(); // Choisir le nom du joueur
+        joueurs[2].score = 30;
 
         // Créer un Scanner pour la saisie utilisateur
         Scanner entre = new Scanner(System.in);
@@ -69,7 +79,7 @@ public class Main {
             }
 
             if (choix.equals("3")) { // Si l'utilisateur saisit les règles
-                Scores.afficherScores(); // Afficher les scores
+                afficherScores.lireScores("scores.txt"); // Afficher les scores
                 choix = ""; // Réinitialise la variable de choix à une chaîne vide
             }
         }
