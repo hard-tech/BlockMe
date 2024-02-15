@@ -41,24 +41,29 @@ public class deplacerJoueur {
             return;
         }
 
-        boolean caseOccupee = false;
-        
-        // Vérifier si un autre joueur occupe déjà la case
-        for (Joueur autreJoueur : joueurs) {
-            if (autreJoueur.ligne == nouvelleLigne && autreJoueur.colonne == nouvelleColonne) {
-                caseOccupee = true;
-                break;
+        // Vérifier si les nouvelles coordonnées sont valides et si la case est vide
+        if (nouvelleLigne >= 0 && nouvelleLigne < Plateau.HAUTEUR &&
+            nouvelleColonne >= 0 && nouvelleColonne < Plateau.LARGEUR &&
+            plateau[nouvelleLigne][nouvelleColonne].equals("   ")) {
+            // Vérifier si un autre joueur occupe déjà la case
+            boolean caseOccupee = false;
+            for (int[] coJoueur : coordonees.recupererCoordonnees(joueurs)) {
+                if(coJoueur[0] == nouvelleLigne && coJoueur[1] == nouvelleColonne){
+                    caseOccupee = true;
+                }
             }
-        }
-
-        if (!caseOccupee) {
-            // Déplacer le joueur
-            joueur.ligne = nouvelleLigne;
-            joueur.colonne = nouvelleColonne;
+            if (!caseOccupee) {
+                // Déplacer le joueur
+                joueur.ligne = nouvelleLigne;
+                joueur.colonne = nouvelleColonne;
+            } else {
+                System.out.println("Il y a déjà un joueur sur cette case !");
+            }
         } else {
-            System.out.println("Il y a déjà un joueur sur cette case !");
+            System.out.println("Déplacement impossible !");
         }
     }
+    
     public static boolean verifDeplacement(Joueur[] joueurs, String[][] plateau, Joueur joueur) {
          // Stocker les coordonnées du nouveau déplacement pour le joueur
          int nouvelleLigne = joueur.ligne;

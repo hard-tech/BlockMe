@@ -73,6 +73,7 @@ public class jouer {
                 
                 System.out.println(joueurs[i].nom);
             }
+
             // Melanger le tableau joueurs
             Random rand = new Random();
 
@@ -89,84 +90,93 @@ public class jouer {
             Plateau.initialisationPlateauDeJeu(nombreDeJoueurs, joueurs); // initialisation du plateau de jeu
             Plateau.afficherPlateau();
 
-                for (int i = 0; i < nombreDeJoueurs; i++) {
+            for (Joueur joueur : joueurs) {
+                System.out.println("----------");
+                System.out.println(joueur.nom);
+                System.out.println(joueur.ligne);
+                System.out.println(joueur.colonne);
+                System.out.println("----------");
+            }
 
-                    String directionDeplacement = "";
-                    boolean caseDetruite = false;
-                    while (!directionDeplacement.equals("z") && !directionDeplacement.equals("s") && !directionDeplacement.equals("q") && !directionDeplacement.equals("d")){
-                        System.out.println("Dans quelle direction voulez vous vous déplacer ? :");
-                        directionDeplacement = entre.nextLine(); // Lire l'entrée utilisateur
-                        directionDeplacement = directionDeplacement.toLowerCase(); // Convertir la direction en lower case
-                    }
+            for (int i = 0; i < nombreDeJoueurs; i++) {
 
-                    // Clear le terminal
-                    System.out.print("\033[H\033[2J");
-
-                    // Nettoyage des coordonnées du plateau de jeu (avant déplacement)
-                    Plateau.nettoyageCasePrecedente(joueurs);
-
-                    // déplacer le joueur
-                    if (deplacerJoueur.verifDeplacement(joueurs, Plateau.recuperePlateau(), joueurs[i])){
-                        System.out.println("================================================================= Bien executer =================================================================");
-                        deplacerJoueur.seDeplacer(joueurs[i], joueurs, directionDeplacement, Plateau.recuperePlateau());
-                    }
-                    System.out.println("================================================================= Après IF executer =================================================================");
-
-                    //mise à jour de la plateau de jeu
-                    Plateau.miseAJourPlateauDeJeu(joueurs);
-
-                    //afficher le plateau de jeu
-                    Plateau.afficherPlateau();
-                    while (!caseDetruite) {
-                        String positionCase = "";
-                        boolean ligneValide = false;
-                        boolean colonneValide = false;
-                    
-                        while (!ligneValide || !colonneValide) {
-                            do {
-                                System.out.println("Dans quelle case voulez-vous détruire ? (Ex : B3) :");
-                                positionCase = entre.nextLine().toUpperCase(); // Lire et convertir l'entrée utilisateur en majuscules
-                        
-                                // Corrige l'expression régulière pour qu'elle accepte les chiffres de 1 à 9 et 10 après les lettres de A à K
-                            } while (!positionCase.matches("[ABCDEFGHIJK](10|[1-9])")); // Regex pour vérifier que la position est bien valide
-                        
-                            // Extraction de la colonne et de la ligne de façon à gérer correctement "10"
-                            String colonneCase = String.valueOf(positionCase.charAt(0));
-                            String ligneCase = positionCase.substring(1); // Maintenant cela fonctionne car l'expression régulière garantit une entrée valide
-                        
-                            // Vérification de la colonne
-                            for (String nomColonne : nomsColonne) {
-                                if (nomColonne.equals(colonneCase)) {
-                                    destinationCaseDetruite[1] = java.util.Arrays.asList(nomsColonne).indexOf(nomColonne);
-                                    colonneValide = true;
-                                    break;
-                                }
-                            }
-                        
-                            // Vérification de la ligne
-                            for (String nomLigne : nomsLigne) {
-                                if (nomLigne.equals(ligneCase)) {
-                                    destinationCaseDetruite[0] = java.util.Arrays.asList(nomsLigne).indexOf(nomLigne);
-                                    ligneValide = true;
-                                    break;
-                                }
-                            }
-                        
-                            if (!ligneValide || !colonneValide) {
-                                System.out.println("Coordonnées invalides, veuillez réessayer.");
-                            }
-                        }
-                        
-                        // Supposons que Plateau.detruireCase est une méthode définie pour détruire la case
-                        caseDetruite = Plateau.detruireCase(destinationCaseDetruite); // détruire la case de destination
-                        if (!caseDetruite) {
-                            System.out.println("La case ne peut pas être détruite, veuillez choisir une autre case.");
-                        }
-                    }
-                    System.out.print("\033[H\033[2J");
-
-                    Plateau.afficherPlateau(); // afficher le plateau de jeu
+                String directionDeplacement = "";
+                boolean caseDetruite = false;
+                while (!directionDeplacement.equals("z") && !directionDeplacement.equals("s") && !directionDeplacement.equals("q") && !directionDeplacement.equals("d")){
+                    System.out.println("Dans quelle direction voulez vous vous déplacer ? :");
+                    directionDeplacement = entre.nextLine(); // Lire l'entrée utilisateur
+                    directionDeplacement = directionDeplacement.toLowerCase(); // Convertir la direction en lower case
                 }
+
+                // Clear le terminal
+                System.out.print("\033[H\033[2J");
+
+                // Nettoyage des coordonnées du plateau de jeu (avant déplacement)
+                Plateau.nettoyageCasePrecedente(joueurs);
+
+                // déplacer le joueur
+                deplacerJoueur.seDeplacer(joueurs[i], joueurs, directionDeplacement, Plateau.recuperePlateau());
+                System.out.println(deplacerJoueur.verifDeplacement(joueurs, Plateau.recuperePlateau(), joueurs[i]));
+                // if (deplacerJoueur.verifDeplacement(joueurs, Plateau.recuperePlateau(), joueurs[i])){
+                //     System.out.println("================================================================= Bien executer =================================================================");
+                // }
+                // System.out.println("================================================================= Après IF executer =================================================================");
+
+                //mise à jour de la plateau de jeu
+                Plateau.miseAJourPlateauDeJeu(joueurs);
+
+                //afficher le plateau de jeu
+                Plateau.afficherPlateau();
+                while (!caseDetruite) {
+                    String positionCase = "";
+                    boolean ligneValide = false;
+                    boolean colonneValide = false;
+                
+                    while (!ligneValide || !colonneValide) {
+                        do {
+                            System.out.println("Dans quelle case voulez-vous détruire ? (Ex : B3) :");
+                            positionCase = entre.nextLine().toUpperCase(); // Lire et convertir l'entrée utilisateur en majuscules
+                    
+                            // Corrige l'expression régulière pour qu'elle accepte les chiffres de 1 à 9 et 10 après les lettres de A à K
+                        } while (!positionCase.matches("[ABCDEFGHIJK](10|[1-9])")); // Regex pour vérifier que la position est bien valide
+                    
+                        // Extraction de la colonne et de la ligne de façon à gérer correctement "10"
+                        String colonneCase = String.valueOf(positionCase.charAt(0));
+                        String ligneCase = positionCase.substring(1); // Maintenant cela fonctionne car l'expression régulière garantit une entrée valide
+                    
+                        // Vérification de la colonne
+                        for (String nomColonne : nomsColonne) {
+                            if (nomColonne.equals(colonneCase)) {
+                                destinationCaseDetruite[1] = java.util.Arrays.asList(nomsColonne).indexOf(nomColonne);
+                                colonneValide = true;
+                                break;
+                            }
+                        }
+                    
+                        // Vérification de la ligne
+                        for (String nomLigne : nomsLigne) {
+                            if (nomLigne.equals(ligneCase)) {
+                                destinationCaseDetruite[0] = java.util.Arrays.asList(nomsLigne).indexOf(nomLigne);
+                                ligneValide = true;
+                                break;
+                            }
+                        }
+                    
+                        if (!ligneValide || !colonneValide) {
+                            System.out.println("Coordonnées invalides, veuillez réessayer.");
+                        }
+                    }
+                    
+                    // Supposons que Plateau.detruireCase est une méthode définie pour détruire la case
+                    caseDetruite = Plateau.detruireCase(destinationCaseDetruite); // détruire la case de destination
+                    if (!caseDetruite) {
+                        System.out.println("La case ne peut pas être détruite, veuillez choisir une autre case.");
+                    }
+                }
+                System.out.print("\033[H\033[2J");
+
+                Plateau.afficherPlateau(); // afficher le plateau de jeu
+            }
 
             // Clear le terminal
             System.out.print("\033[H\033[2J");
