@@ -107,9 +107,10 @@ public class jouer {
 
                     // déplacer le joueur
                     if (deplacerJoueur.verifDeplacement(joueurs, Plateau.recuperePlateau(), joueurs[i])){
-                        deplacerJoueur.verifDeplacement(joueurs, Plateau.recuperePlateau(), joueurs[i]);
+                        System.out.println("================================================================= Bien executer =================================================================");
                         deplacerJoueur.seDeplacer(joueurs[i], joueurs, directionDeplacement, Plateau.recuperePlateau());
                     }
+                    System.out.println("================================================================= Après IF executer =================================================================");
 
                     //mise à jour de la plateau de jeu
                     Plateau.miseAJourPlateauDeJeu(joueurs);
