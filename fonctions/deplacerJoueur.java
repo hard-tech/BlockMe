@@ -44,7 +44,7 @@ public class deplacerJoueur {
             for (int[] coJoueur : coordonees.recupererCoordonnees(joueurs)) {
                 if(coJoueur[0] == nouvelleLigne && coJoueur[1] == nouvelleColonne){
                     caseOccupee = true;
-                }&
+                }
             }
             if (!caseOccupee) {
                 // Déplacer le joueur
