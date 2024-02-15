@@ -1,8 +1,11 @@
 package classes;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class Joueur {
 
@@ -26,21 +29,46 @@ public class Joueur {
     }
 
     public static void sauvegarderScores(Joueur[] joueurs, String nomFichier) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(nomFichier))) {
-            // Écrire les en-têtes ou les informations de formatage nécessaires
-            writer.write("Scores des joueurs :\n");
-            writer.write("---------------------\n");
-            
-            // Parcourir le tableau de joueurs et écrire les informations de chaque joueur dans le fichier
-            for (Joueur joueur : joueurs) {
-                writer.write("Nom du joueur : " + joueur.nom + "\n");
-                writer.write("Score du joueur : " + joueur.score + "\n");
-                writer.write("---------------------\n");
+        ArrayList<String> lignes = new ArrayList<>();
+
+        // Lire les lignes existantes
+        try (BufferedReader reader = new BufferedReader(new FileReader(nomFichier))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                lignes.add(line);
             }
-            
+        } catch (IOException e) {
+            System.err.println("Erreur lors de la lecture du fichier : " + e.getMessage());
+        }
+
+        // Mettre à jour les scores des joueurs existants ou ajouter de nouveaux joueurs
+        for (Joueur joueur : joueurs) {
+            boolean joueurExistant = false;
+            for (int i = 0; i < lignes.size(); i++) {
+                if (lignes.get(i).startsWith("Nom du joueur : " + joueur.nom)) {
+                    // Mise à jour du score du joueur existant
+                    lignes.set(i + 1, "Score du joueur : " + joueur.score);
+                    joueurExistant = true;
+                    break;
+                }
+            }
+            if (!joueurExistant) {
+                // Ajouter une nouvelle entrée pour le joueur
+                lignes.add("Nom du joueur : " + joueur.nom);
+                lignes.add("Score du joueur : " + joueur.score);
+                lignes.add("---------------------");
+            }
+        }
+
+        // Écrire les lignes mises à jour dans le fichier
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(nomFichier))) {
+            for (String line : lignes) {
+                writer.write(line);
+                writer.newLine();
+            }
             System.out.println("Les scores ont été sauvegardés avec succès dans le fichier : " + nomFichier);
         } catch (IOException e) {
-            System.err.println("Erreur lors de la sauvegarde des scores : " + e.getMessage());
+            System.err.println("Erreur lors de l'écriture dans le fichier : " + e.getMessage());
         }
     }
 }
