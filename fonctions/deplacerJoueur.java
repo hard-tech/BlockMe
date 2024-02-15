@@ -1,67 +1,60 @@
 package fonctions;
+
 import classes.Joueur;
 import classes.Plateau;
 
 public class deplacerJoueur {
     /**
-     * La fonction "seDeplacer" permet de déplacer un joueur dans une direction tout en verrifiant s'il peut.
+     * La fonction "seDeplacer" permet de déplacer un joueur dans une direction tout en vérifiant s'il peut.
      */
     public static void seDeplacer(Joueur joueur, Joueur[] joueurs, String direction, String[][] plateau) {
+        // Stocker les coordonnées du nouveau déplacement pour le joueur
+        int nouvelleLigne = joueur.ligne;
+        int nouvelleColonne = joueur.colonne;
+
         // Si la direction est vers le haut ("z")
         if (direction.equals("z")) {
-            // Vérifie si le joueur peut monter (ligne supérieure à 0)
-            if (plateau[joueur.ligne-1][joueur.colonne].equals("   ")) {// Si la case est vide
-                if (joueur.ligne > 0) {
-                    joueur.ligne--; // Décrémente la ligne du joueur
-                }else{
-                    System.out.println("Tu peux pas aller là débilos ! Relis les règles ou casse toi !"); // Affiche un message d'erreur
-                }
-            }else{
-                System.out.println("Tu peux pas aller là débilos ! Relis les règles ou casse toi !"); // Affiche un message d'erreur
-            }
+            nouvelleLigne--; // Déplacer vers le haut
         }
         // Si la direction est vers le bas ("s")
         else if (direction.equals("s")) {
-            // Vérifie si le joueur peut descendre (ligne inférieure à HAUTEUR - 1)
-            if (plateau[joueur.ligne+1][joueur.colonne].equals("   ")) {// Si la case est vide
-                if (joueur.ligne < Plateau.HAUTEUR - 1) {
-                    joueur.ligne++; // Incrémente la ligne du joueur
-                }else{
-                    System.out.println("Tu peux pas aller là débilos ! Relis les règles ou casse toi !"); // Affiche un message d'erreur
-                }
-            }else{
-                System.out.println("Tu peux pas aller là débilos ! Relis les règles ou casse toi !"); // Affiche un message d'erreur
-            }
-        } 
+            nouvelleLigne++; // Déplacer vers le bas
+        }
         // Si la direction est vers la gauche ("q")
         else if (direction.equals("q")) {
-            // Vérifie si le joueur peut aller à gauche (colonne supérieure à 0)
-            if (plateau[joueur.ligne][joueur.colonne-1].equals("   ")) {// Si la case est vide
-                if (joueur.colonne > 0) {
-                    joueur.colonne--; // Décrémente la colonne du joueur
-                }else{
-                    System.out.println("Tu peux pas aller là débilos ! Relis les règles ou casse toi !"); // Affiche un message d'erreur
-                }
-            }else{
-                System.out.println("Tu peux pas aller là débilos ! Relis les règles ou casse toi !"); // Affiche un message d'erreur
-            }
-        } 
+            nouvelleColonne--; // Déplacer vers la gauche
+        }
         // Si la direction est vers la droite ("d")
         else if (direction.equals("d")) {
-            // Vérifie si le joueur peut aller à droite (colonne inférieure à LARGEUR - 1)
-            if (plateau[joueur.ligne][joueur.colonne+1].equals("   ")) {// Si la case est vide
-                if (joueur.colonne < Plateau.LARGEUR - 1) {
-                    joueur.colonne++; // Incrémente la colonne du joueur
-                }else{
-                    System.out.println("Tu peux pas aller là débilos ! Relis les règles ou casse toi !"); // Affiche un message d'erreur
-                }
-            }else{
-                System.out.println("Tu peux pas aller là débilos ! Relis les règles ou casse toi !"); // Affiche un message d'erreur
-            }
+            nouvelleColonne++; // Déplacer vers la droite
         }
         // Si la direction n'est pas valide
-        else{
-            System.out.println("Tu peux pas aller là débilos ! Relis les règles ou casse toi !"); // Affiche un message d'erreur
+        else {
+            System.out.println("Direction non valide !");
+            return;
+        }
+
+        // Vérifier si les nouvelles coordonnées sont valides et si la case est vide
+        if (nouvelleLigne >= 0 && nouvelleLigne < Plateau.HAUTEUR &&
+            nouvelleColonne >= 0 && nouvelleColonne < Plateau.LARGEUR &&
+            plateau[nouvelleLigne][nouvelleColonne].equals("   ")) {
+            // Vérifier si un autre joueur occupe déjà la case
+            boolean caseOccupee = false;
+            for (Joueur autreJoueur : joueurs) {
+                if (autreJoueur != joueur && autreJoueur.ligne == nouvelleLigne && autreJoueur.colonne == nouvelleColonne) {
+                    caseOccupee = true;
+                    break;
+                }
+            }
+            if (!caseOccupee) {
+                // Déplacer le joueur
+                joueur.ligne = nouvelleLigne;
+                joueur.colonne = nouvelleColonne;
+            } else {
+                System.out.println("Il y a déjà un joueur sur cette case !");
+            }
+        } else {
+            System.out.println("Déplacement impossible !");
         }
     }
 }
