@@ -81,8 +81,13 @@ public class Plateau{
         }
     }
 
-    public static void detruireCase(int [] destination){
-        plateau[destination[0]][destination[1]] = " X ";
+    public static boolean detruireCase(int [] destination){
+        if (plateau[destination[0]][destination[1]]== "   ") {// Si la case est vide
+                plateau[destination[0]][destination[1]] = " X ";// Detruire la case
+                return true;
+        }else{
+            return false;
+        }
     }
 
     /**
