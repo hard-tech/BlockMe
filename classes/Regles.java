@@ -19,14 +19,14 @@ public class Regles {
                 "     |                                                                                 |\n" +
                 "     |                                                                                 |\n" +
                 "     |   * Le jeu se déroule sur un plateau de 10x11 cases.                            |\n" +
-                "     |   * Entre 2 et 6 joueurs peuvent participer.                                    |\n" +
+                "     |   * Entre 2 et 4 joueurs peuvent participer.                                    |\n" +
                 "     |   * Les joueurs se déplacent à tour de rôle d'une case dans n'importe quelle    |\n" +
-                "     |     direction (haut, bas, gauche, droite).                                      |\n" +
+                "     |     direction (haut 'z', bas 's', gauche 'q', droite 'd').                      |\n" +
                 "     |   * Après s'être déplacé, un joueur doit détruire une case du plateau.          |\n" +
                 "     |   * Si un joueur est bloqué et ne peut plus se déplacer, il perd.               |\n" +
                 "     |   * Le jeu continue jusqu'à ce qu'il ne reste plus qu'un survivant.             |\n" +
                 "     |                                                                                 |\n" +
-                "     |   Amusez-vous bien et que le meilleur joueur gagne !                            |\n" +
+                "     |   Assurez vous que le plus nul soit focus !                                     |\n" +
                 "     |                                                                                 |\n" +
                 "     |                                                                                 |\n" +
                 "     |                                                                                 |\n" +

@@ -1,14 +1,6 @@
 package fonctions;
-
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-
 import classes.Joueur;
 import classes.Plateau;
-import fonctions.coordonees;
 
 public class deplacerJoueur {
     /**
@@ -58,17 +50,16 @@ public class deplacerJoueur {
                 joueur.colonne = nouvelleColonne;
                 return true;
             } else {
-                System.out.println("Il y a déjà un joueur sur cette case !");
+                System.out.println("Il y a déjà un joueur sur cette case tocard !");
                 return false;
             }
         } else {
-            System.out.println("Déplacement impossible !");
+            System.out.println("Déplacement impossible ! Tu sors de la route alcoolique !");
             return false;
         }
     }
     
-    public static boolean verifDeplacement(Joueur[] joueurs, String[][] plateau, Joueur joueur) {
-        // Définir les déplacements possibles : haut, bas, gauche, droite
+    public static boolean verifDeplacementBloquer(Joueur[] joueurs, String[][] plateau, Joueur joueur) {
         int[][] deplacements = {
             {-1, 0}, // haut
             {1, 0},  // bas
@@ -76,34 +67,29 @@ public class deplacerJoueur {
             {0, 1}   // droite
         };
     
-        // Parcourir chaque déplacement possible
         for (int[] dep : deplacements) {
             int nouvelleLigne = joueur.ligne + dep[0];
             int nouvelleColonne = joueur.colonne + dep[1];
     
-            // Vérifier si les nouvelles coordonnées sont dans les limites du plateau
             if (nouvelleLigne >= 0 && nouvelleLigne < Plateau.HAUTEUR &&
-                nouvelleColonne >= 0 && nouvelleColonne < Plateau.LARGEUR) {
-                // Vérifier si la case est vide
-                if (plateau[nouvelleLigne][nouvelleColonne].equals("   ")) {
-                    // Vérifier si un autre joueur occupe déjà la case
-                    boolean caseOccupee = false;
-                    for (Joueur autreJoueur : joueurs) {
-                        if (autreJoueur.ligne == nouvelleLigne && autreJoueur.colonne == nouvelleColonne) {
-                            caseOccupee = true;
-                            break; // Sortir de la boucle si une case occupée est trouvée
-                        }
+                nouvelleColonne >= 0 && nouvelleColonne < Plateau.LARGEUR &&
+                plateau[nouvelleLigne][nouvelleColonne].equals("   ")) {
+    
+                boolean caseOccupee = false;
+                for (Joueur autreJoueur : joueurs) {
+                    if (autreJoueur != joueur && autreJoueur.ligne == nouvelleLigne && autreJoueur.colonne == nouvelleColonne) {
+                        caseOccupee = true;
+                        break;
                     }
-                    if (!caseOccupee) {
-                        // Au moins une case adjacente est libre et non occupée
-                        return true;
-                    }
+                }
+                if (!caseOccupee) {
+                    return false; // Un déplacement est possible, donc le joueur n'est pas bloqué
                 }
             }
         }
     
-        // Si on arrive ici, aucune case adjacente n'est libre et non occupée
-        System.out.println("Déplacement impossible sur les cases adjacentes !");
-        return false;
+        // Aucun déplacement valide trouvé, le joueur est bloqué
+        return true;
     }
+    
 }

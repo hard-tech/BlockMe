@@ -9,17 +9,15 @@ public class Main {
     public static void main(String[] args) {
         // Créer un Scanner pour la saisie utilisateur
         Scanner entre = new Scanner(System.in);
-
         String choix = ""; // Initialise la variable de choix à une chaîne vide
 
      
 
-        // Clear le terminal
-        System.out.print("\033[H\033[2J");
+        System.out.print("\033[H\033[2J"); // Clear le terminal
 
         // Boucle principale du programme
         while (!choix.equals("4")) {
-
+            
             // Afficher le titre du jeu
             System.out.print("" +
                     "\n" +
@@ -28,20 +26,20 @@ public class Main {
                     " |  _ \\| |/ _ \\ / __| |/ / |\\/| |/ _ \\\n" +
                     " | |_) | | (_) | (__|   <| |  | |  __/\n" +
                     " |____/|_|\\___/ \\___|_|\\_\\_|  |_|\\___|\n" +
-                    "             │           │             \n"
+                    "             ║           ║             \n"
             );
 
             // Afficher le menu principal
             System.out.print("" +
-                    "             │           │     \n" +
-                    "        ┌────────────────────┐ \n" +
-                    "        │                    │ \n" +
-                    "        │     1 - Jouer      │ \n" +
-                    "        │     2 - Règles     │ \n" +
-                    "        │     3 - Scores     │ \n" +
-                    "        │     4 - Quitter    │ \n" +
-                    "        │                    │ \n" +
-                    "        └────────────────────┘ \n"
+                    "             ║           ║     \n" +
+                    "        ╔════╩═══════════╩═══╗ \n" +
+                    "        ║                    ║ \n" +
+                    "        ║     1 - Jouer      ║ \n" +
+                    "        ║     2 - Règles     ║ \n" +
+                    "        ║     3 - Scores     ║ \n" +
+                    "        ║     4 - Quitter    ║ \n" +
+                    "        ║                    ║ \n" +
+                    "        ╚════════════════════╝ \n"
             );
 
             // Tant que l'utilisateur ne saisit pas une option valide, demander à nouveau
@@ -53,6 +51,9 @@ public class Main {
                     System.out.println("\nVeuillez saisir une option valide : (1 - Jouer, 2 - Règles, 3 - Scores, 4 - Quitter) :");
                 }
             }
+            
+            
+            System.out.print("\033[H\033[2J"); // Clear le terminal
           
             if (choix.equals("1")) { // Si l'utilisateur saisit le jeu
                 // Clear le terminal

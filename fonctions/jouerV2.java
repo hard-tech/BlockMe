@@ -1,10 +1,6 @@
 package fonctions;
 
 import java.util.Scanner;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Random;
-
 import classes.Plateau;
 import classes.Joueur;
 
@@ -29,7 +25,10 @@ public class jouerV2 {
 
     public static void jouer(Scanner entre) {
         
-        String[] NOMS_COLONNE = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K"}, NOMS_LIGNE = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"}, nomDesJoueurs; // initialiser les variables de type String[] pour le fonctionnement du jeu
+        String[] 
+            NOMS_COLONNE = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K"}, // Déclaration d'une constante de type STRING (qui nous permettra de vérifier si les coorrodonners donnes sont valide)
+            NOMS_LIGNE = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"}, // Déclaration d'une constante de type STRING (qui nous permettra de vérifier si les coorrodonners donnes sont valide)
+            nomDesJoueurs; // initialiser les variables de type String[] pour le fonctionnement du jeu
         String nombreDeJoueursVoulu = ""; // initialiser la variable de nombre de joueurs voulu par le joueur (avant vérification du contenue de la variable)
         
         int nombreDeJoueurs = 0, nombreDeJoueursEnVie; // initialiser les variables de nombre de joueurs et nombre de joueurs en vie
@@ -38,14 +37,14 @@ public class jouerV2 {
         Joueur[] joueurs; // initialiser le tableau de joueurs
 
         do { // Demmander les entrées de l'utilisateur (combien de joueurs veules jouer)
-            System.out.println("\n----- Veuillez saisir un nombre entre 2 et 4 -----\n");
+            System.out.println("\n----- Veuillez saisir le nombre de joueur (entre 2 et 4) -----\n");
             nombreDeJoueursVoulu = entre.next(); // Lire l'entrée utilisateur
 
             if (verificateur.verifChiffreEnEntre(2, 4, nombreDeJoueursVoulu)) {
                 nombreDeJoueurs = Integer.parseInt(nombreDeJoueursVoulu);
             } else {
                 System.out.print("\033[H\033[2J"); // Clear le terminal
-                System.out.println("\n[---- Nombre de joueurs invalide ! ----] \n\n"); // Afficher le message d'erreur
+                System.out.println("\n[---- Nombre de joueurs invalide ! On t'a dit entre 2 et 4 trou de balles ----] \n\n"); // Afficher le message d'erreur
             }
         }while(nombreDeJoueurs < 2 || nombreDeJoueurs > 4);
 
@@ -53,22 +52,52 @@ public class jouerV2 {
             joueurs = new Joueur[nombreDeJoueurs]; // Instancier un tableau contenant les joueurs
             nomDesJoueurs = new String[nombreDeJoueurs]; // Instancier un tableau contenant les noms des joueurs
             generationJoueurs.generationJoueurs(nomDesJoueurs, nombreDeJoueurs, joueurs); // Générer les joueurs
-        //
         
         Plateau.initialisationPlateauDeJeu(nombreDeJoueurs, joueurs); // Initialiser le plateau de jeu
+        nombreDeJoueursEnVie = joueurs.length; // Initialiser le nombre de joueurs en vie
+        entre.nextLine(); // Ceci consomme et ignore l'\n restant dans le tampon donc ont l'utilise
         
-        // Affichage des elements du jeu (de façon récurante)
-            System.out.print("\033[H\033[2J"); // Clear le terminal
+        while (nombreDeJoueursEnVie != 1 && nombreDeJoueursEnVie != 0) {
+            for (int i = 0; i < joueurs.length; i++) {    
 
-            Plateau.afficherPlateau(); // Afficher le plateau de jeu
-
-            // affichage du tableau de noms des joueurs
-                System.out.println("\n");
-                System.out.println("   ╔════════════════════════");
-                for (int i = 0; i < joueurs.length; i++) { // Gérer Le tableau contenant le noms des joueurs
-                    System.out.println("   ║  Joueur " + (i + 1) + " ── " + joueurs[i].nom); // Afficher le nom du joueur
+                for (Joueur joueur : joueurs) {
+                    if(deplacerJoueur.verifDeplacementBloquer(joueurs, Plateau.plateau, joueur)){ joueur.enVie = false; } // virification de la posibilité de déplacement du joueurs (si non il est mort)
                 }
-                System.out.println("   ╚════════════════════════");
-        //
+                
+                nombreDeJoueursEnVie = 0; // remise à 0 du nombre de joueurs en vie pour le comptage
+                for (Joueur joueur : joueurs) { 
+                    if(joueur.enVie) { nombreDeJoueursEnVie++; } 
+                }// Mise à jours du nombre de joeur en vie
+
+                
+                affichageJeu.afficher(joueurs, nombreDeJoueursEnVie); // Afficher tout le content du plateau de jeu et information
+                if(joueurs[i].enVie){ 
+                    if(nombreDeJoueursEnVie == 1 || nombreDeJoueursEnVie == 0) {
+                        break;
+                    }
+
+                    tourJoueur.tourJoueur(joueurs, i, entre, nombreDeJoueursEnVie); 
+                } // Lancer DU joueur
+            }
+            if(nombreDeJoueursEnVie == 1 || nombreDeJoueursEnVie == 0) {
+                break;
+            }
+        }
+
+        try {
+            // Afficher le message de fin de jeu
+            System.out.println("" +
+                " ____                         _                                                 __                   _       _   _                                  \n" +
+                "| __ ) _ __ __ ___   _____   | |_ _   _    __ _ ___    __ _  __ _  __ _ _ __   /_/   _ __ ___   __ _(_)___  | |_( ) ___  ___    __ _ _   _  ___ ____\n" +
+                "|  _ \\| '__/ _` \\ \\ / / _ \\  | __| | | |  / _` / __|  / _` |/ _` |/ _` | '_ \\ / _ \\ | '_ ` _ \\ / _` | / __| | __|/ / _ \\/ __|  / _` | | | |/ _ \\_  /\n" +
+                "| |_) | | | (_| |\\ V / (_) | | |_| |_| | | (_| \\__ \\ | (_| | (_| | (_| | | | |  __/ | | | | | | (_| | \\__ \\ | |_  |  __/\\__ \\ | (_| | |_| |  __// / \n" +
+                "|____/|_|  \\__,_| \\_/ \\___/   \\__|\\__,_|  \\__,_|___/  \\__, |\\__,_|\\__, |_| |_|\\___| |_| |_| |_|\\__,_|_|___/  \\__|  \\___||___/  \\__, |\\__,_|\\___/___|\n" +
+                "                                                      |___/       |___/                                                        |___/                " +
+                "");
+
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
