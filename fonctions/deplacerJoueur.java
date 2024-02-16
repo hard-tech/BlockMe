@@ -1,49 +1,47 @@
 package fonctions;
+
 import classes.Joueur;
 import classes.Plateau;
 
+/**
+ * La classe 'deplacerJoueur' fournit des fonctionnalités pour déplacer un joueur sur le plateau de jeu.
+ */
 public class deplacerJoueur {
+
     /**
-     * La fonction "seDeplacer" permet de déplacer un joueur dans une direction tout en vérifiant s'il peut.
+     * Déplace un joueur dans une direction spécifiée sur le plateau de jeu.
+     *
+     * @param joueur              Le joueur à déplacer.
+     * @param joueurs             Le tableau des joueurs.
+     * @param direction           La direction du déplacement ("z" pour haut, "s" pour bas, "q" pour gauche, "d" pour droite, "exit" pour quitter, "regles" ou "règles" pour afficher les règles).
+     * @param plateau             Le plateau de jeu.
+     * @param nombreDeJoueursEnVie  Le nombre de joueurs encore en vie.
+     * @return                    Vrai si le déplacement a été effectué avec succès, faux sinon.
      */
     public static boolean seDeplacer(Joueur joueur, Joueur[] joueurs, String direction, String[][] plateau, int nombreDeJoueursEnVie) {
-        // Stocker les coordonnées du nouveau déplacement pour le joueur
         int nouvelleLigne = joueur.ligne;
         int nouvelleColonne = joueur.colonne;
 
-        // Si la direction est vers le haut ("z")
         if (direction.equals("z")) {
-            nouvelleLigne--; // Déplacer vers le haut
-        }
-        // Si la direction est vers le bas ("s")
-        else if (direction.equals("s")) {
-            nouvelleLigne++; // Déplacer vers le bas
-        }
-        // Si la direction est vers la gauche ("q")
-        else if (direction.equals("q")) {
-            nouvelleColonne--; // Déplacer vers la gauche
-        }
-        // Si la direction est vers la droite ("d")
-        else if (direction.equals("d")) {
-            nouvelleColonne++; // Déplacer vers la droite
-        }
-        else if (direction.equals("exit")) {
-            // Revenir au menuelle
-            nombreDeJoueursEnVie = 0; // 0 permet de dir que l'on veu que la partie s'arrête
-        }
-        else if (direction.equals("regles") || direction.equals("règles")) {
+            nouvelleLigne--;
+        } else if (direction.equals("s")) {
+            nouvelleLigne++;
+        } else if (direction.equals("q")) {
+            nouvelleColonne--;
+        } else if (direction.equals("d")) {
+            nouvelleColonne++;
+        } else if (direction.equals("exit")) {
+            nombreDeJoueursEnVie = 0;
+        } else if (direction.equals("regles") || direction.equals("règles")) {
             return false;
-        }
-        else {
+        } else {
             System.out.println("Direction non valide !");
             return false;
         }
 
-        // Vérifier si les nouvelles coordonnées sont valides et si la case est vide
         if (nouvelleLigne >= 0 && nouvelleLigne < Plateau.HAUTEUR &&
             nouvelleColonne >= 0 && nouvelleColonne < Plateau.LARGEUR &&
             plateau[nouvelleLigne][nouvelleColonne].equals("   ")) {
-            // Vérifier si un autre joueur occupe déjà la case
             boolean caseOccupee = false;
             for (int[] coJoueur : coordonees.recupererCoordonnees(joueurs)) {
                 if(coJoueur[0] == nouvelleLigne && coJoueur[1] == nouvelleColonne){
@@ -51,7 +49,6 @@ public class deplacerJoueur {
                 }
             }
             if (!caseOccupee) {
-                // Déplacer le joueur
                 joueur.ligne = nouvelleLigne;
                 joueur.colonne = nouvelleColonne;
                 return true;
@@ -65,6 +62,14 @@ public class deplacerJoueur {
         }
     }
     
+    /**
+     * Vérifie si un joueur est bloqué et ne peut pas se déplacer.
+     *
+     * @param joueurs   Le tableau des joueurs.
+     * @param plateau   Le plateau de jeu.
+     * @param joueur    Le joueur à vérifier.
+     * @return          Vrai si le joueur est bloqué, faux sinon.
+     */
     public static boolean verifDeplacementBloquer(Joueur[] joueurs, String[][] plateau, Joueur joueur) {
         int[][] deplacements = {
             {-1, 0}, // haut
@@ -89,13 +94,11 @@ public class deplacerJoueur {
                     }
                 }
                 if (!caseOccupee) {
-                    return false; // Un déplacement est possible, donc le joueur n'est pas bloqué
+                    return false;
                 }
             }
         }
     
-        // Aucun déplacement valide trouvé, le joueur est bloqué
         return true;
     }
-    
 }
