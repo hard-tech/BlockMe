@@ -50,11 +50,11 @@ public class deplacerJoueur {
                 joueur.colonne = nouvelleColonne;
                 return true;
             } else {
-                System.out.println("Il y a déjà un joueur sur cette case !");
+                System.out.println("Il y a déjà un joueur sur cette case tocard !");
                 return false;
             }
         } else {
-            System.out.println("Déplacement impossible !");
+            System.out.println("Déplacement impossible ! Tu sors de la route alcoolique !");
             return false;
         }
     }

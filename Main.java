@@ -14,13 +14,10 @@ public class Main {
 
      
 
-        // Clear le terminal
-        System.out.print("\033[H\033[2J");
+        System.out.print("\033[H\033[2J"); // Clear le terminal
 
         // Boucle principale du programme
         while (!choix.equals("4")) {
-
-            System.out.print("\033[H\033[2J"); // Clear le terminal
             
             // Afficher le titre du jeu
             System.out.print("" +
@@ -30,20 +27,20 @@ public class Main {
                     " |  _ \\| |/ _ \\ / __| |/ / |\\/| |/ _ \\\n" +
                     " | |_) | | (_) | (__|   <| |  | |  __/\n" +
                     " |____/|_|\\___/ \\___|_|\\_\\_|  |_|\\___|\n" +
-                    "             │           │             \n"
+                    "             ║           ║             \n"
             );
 
             // Afficher le menu principal
             System.out.print("" +
-                    "             │           │     \n" +
-                    "        ┌────────────────────┐ \n" +
-                    "        │                    │ \n" +
-                    "        │     1 - Jouer      │ \n" +
-                    "        │     2 - Règles     │ \n" +
-                    "        │     3 - Scores     │ \n" +
-                    "        │     4 - Quitter    │ \n" +
-                    "        │                    │ \n" +
-                    "        └────────────────────┘ \n"
+                    "             ║           ║     \n" +
+                    "        ╔════╩═══════════╩═══╗ \n" +
+                    "        ║                    ║ \n" +
+                    "        ║     1 - Jouer      ║ \n" +
+                    "        ║     2 - Règles     ║ \n" +
+                    "        ║     3 - Scores     ║ \n" +
+                    "        ║     4 - Quitter    ║ \n" +
+                    "        ║                    ║ \n" +
+                    "        ╚════════════════════╝ \n"
             );
 
             // Tant que l'utilisateur ne saisit pas une option valide, demander à nouveau
@@ -56,8 +53,8 @@ public class Main {
                 }
             }
             
-            // Clear le terminal
-            System.out.print("\033[H\033[2J");
+            
+            System.out.print("\033[H\033[2J"); // Clear le terminal
           
             if (choix.equals("1")) { // Si l'utilisateur saisit le jeu
                 jouerV2.jouer(entre); // Lancer le jeu

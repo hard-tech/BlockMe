@@ -8,7 +8,7 @@ import classes.Joueur;
 import classes.Plateau;
 
 public class tourJoueur {
-    public static void tourJoueur(Joueur[] joueurs, int joueurIndex,Scanner entre) {
+    public static void tourJoueur(Joueur[] joueurs, int joueurIndex,Scanner entre, int nombreDeJoueursEnVie) {
 
         String directionDeplacement = ""; // Déclaration d'une variable de type String pour stoquer la direction de déplacement voulu par le joueur
         String[] NOMS_COLONNE = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K"}; // Déclaration d'une constante de type STRING (qui nous permettra de vérifier si les coorrodonners donnes sont valide)
@@ -20,13 +20,15 @@ public class tourJoueur {
 
         do{
             Plateau.nettoyageCasePrecedente(joueurs); // Nettoyage des coordonnées du plateau de jeu (avant déplacement)
-            System.out.println("Dans quelle direction voulez vous vous déplacer '"+ joueurs[joueurIndex].nom +"' ? :");
+            System.out.println("Dans quelle direction voulez vous vous déplacer '"+ joueurs[joueurIndex].nom +"' ? (haut 'z', bas 's', gauche 'q', droite 'd') :");
             System.out.println(directionDeplacement);
             directionDeplacement = entre.nextLine().toLowerCase(); // Lire l'entrée utilisateur
             
         }while(!deplacerJoueur.seDeplacer(joueurs[joueurIndex], joueurs, directionDeplacement, Plateau.recuperePlateau())); // redemmander à l'utilisateur vers qu'elle dirrection veut'il se déplacer temps que la dirrection est interdite ou invalid
 
         Plateau.miseAJourPlateauDeJeu(joueurs); // mise à jour de la plateau de jeu
+        affichageJeu.afficher(joueurs, nombreDeJoueursEnVie); // Afficher tout le content du plateau de jeu et information
+
 
         while (!caseDetruite) {
             String positionCase;
@@ -35,7 +37,7 @@ public class tourJoueur {
         
             while (!ligneValide || !colonneValide) {
                 do {
-                    System.out.println("\nQuelle case voulez-vous détruire ? (Ex : B3) :");
+                    System.out.println("\nQuelle case voulez-vous détruire ? (Ex : K1) :");
                     positionCase = entre.nextLine().toUpperCase(); // Lire et convertir l'entrée utilisateur en majuscules
             
                     // Corrige l'expression régulière pour qu'elle accepte les chiffres de 1 à 9 et 10 après les lettres de A à K
@@ -64,14 +66,12 @@ public class tourJoueur {
                 }
             
                 if (!ligneValide || !colonneValide) {
-                    System.out.println("Coordonnées invalides, veuillez réessayer.");
+                    System.out.println("Coordonnées invalides, t'es vraiment pas malin :(");
                 }
             }
-            
-            System.out.println(coordoneesCaseADetruire[0] + "  " + coordoneesCaseADetruire[1]);
             caseDetruite = Plateau.detruireCase(coordoneesCaseADetruire); // détruire la case de destination
             if (!caseDetruite) {
-                System.out.println("La case ne peut pas être détruite, veuillez choisir une autre case.");
+                System.out.println("La case ne peut pas être détruite, elle est déjà occupée.");
             }
         }
         
