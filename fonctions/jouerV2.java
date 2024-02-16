@@ -58,6 +58,7 @@ public class jouerV2 {
         
         Plateau.initialisationPlateauDeJeu(nombreDeJoueurs, joueurs); // Initialiser le plateau de jeu
         nombreDeJoueursEnVie = joueurs.length; // Initialiser le nombre de joueurs en vie
+
         entre.nextLine(); // Ceci consomme et ignore l'\n restant dans le tampon donc ont l'utilise
         
         while (nombreDeJoueursEnVie != 1 && nombreDeJoueursEnVie != 0) {
@@ -68,6 +69,14 @@ public class jouerV2 {
                 }
                 
                 nombreDeJoueursEnVie = 0; // remise à 0 du nombre de joueurs en vie pour le comptage
+
+                for (Joueur joueur : joueurs) {
+                    if(joueur.ligne == 0 && joueur.colonne == 10) {
+                        int indexAleatoire = (int) (Math.random() * joueurs.length - 1);
+                        joueurs[indexAleatoire].enVie = false; //
+                    }
+                }
+
                 for (Joueur joueur : joueurs) { 
                     if(joueur.enVie) { nombreDeJoueursEnVie++; } 
                 }// Mise à jours du nombre de joeur en vie
