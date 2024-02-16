@@ -10,7 +10,7 @@ public class Joueur implements Serializable { // Implémentation pour une séria
     public String nom; // Le nom du joueur
     public int colonne; // La colonne actuelle du joueur
     public int ligne; // La ligne actuelle du joueur
-    public int score; // Le score du joueur
+    public int score = 0; // Le score du joueur
     private static final String[] nomsPotentiels = {"Syndra", "Teemo", "Warwick", "Maitre Yi", "Queen", "Lux", "Brand", "Fizz", "Kassadin", "Yasuo", "Rengar", "Katarina", "Kayle", "Illaoi", "Trundle"}; // Liste des noms potentiels pour les joueurs
 
     // Choisir dans la liste des noms potentiels un nom au hasard

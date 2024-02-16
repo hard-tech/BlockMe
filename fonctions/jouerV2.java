@@ -36,7 +36,6 @@ public class jouerV2 {
 
         Joueur[] joueurs; // initialiser le tableau de joueurs
 
-        boolean exit = false; // Initialiser la variable de type boolean pour le fonctionnement de la
         boolean voirRegle = false; // Initialiser la variable de type boolean pour le fonctionnement de la
 
         do { // Demmander les entrées de l'utilisateur (combien de joueurs veules jouer)
@@ -78,13 +77,14 @@ public class jouerV2 {
                 }
 
                 for (Joueur joueur : joueurs) { 
-                    if(joueur.enVie) { nombreDeJoueursEnVie++; } 
+                    if(joueur.enVie) { nombreDeJoueursEnVie++;  } 
                 }// Mise à jours du nombre de joeur en vie
 
                 
                 affichageJeu.afficher(joueurs, nombreDeJoueursEnVie, voirRegle); // Afficher tout le content du plateau de jeu et information
                 if(joueurs[i].enVie){ 
                     if(nombreDeJoueursEnVie == 1 || nombreDeJoueursEnVie == 0) {
+                        joueurs[i].score += 5;
                         break;
                     }
 
@@ -92,6 +92,11 @@ public class jouerV2 {
                 } // Lancer DU joueur
             }
             if(nombreDeJoueursEnVie == 1 || nombreDeJoueursEnVie == 0) {
+                for (Joueur joueur : joueurs) {
+                    if(!joueur.enVie){
+                        joueur.score -= 2;
+                    }
+                }
                 break;
             }
         }
