@@ -5,13 +5,13 @@ import java.util.ArrayList;
 
 public class Joueur implements Serializable { // Implémentation pour une sérialisation
 
-    // Définition des variables
-    public static boolean enVie = true; // Variable statique pour suivre l'état de vie des joueurs
-    public String nom; // Le nom du joueur
-    public int colonne; // La colonne actuelle du joueur
-    public int ligne; // La ligne actuelle du joueur
-    public int score; // Le score du joueur
-    private static final String[] nomsPotentiels = {"Syndra", "Teemo", "Warwick", "Maitre Yi", "Queen", "Lux", "Brand", "Fizz", "Kassadin", "Yasuo", "Rengar", "Katarina", "Kayle", "Illaoi", "Trundle"}; // Liste des noms potentiels pour les joueurs
+    // définition de la varible enVie
+    public boolean enVie = true;
+    public String nom;
+    public int colonne;
+    public int ligne;
+    private static final String[] nomsPotentiels = {"Syndra", "Teemo", "Warwick", "Maitre Yi", "Queen", "Lux", "Brand", "Fizz", "Kassadin", "Yasuo", "Rengar", "Katarina", "Kayle", "Illaoi", "Trundle"};
+
 
     // Choisir dans la liste des noms potentiels un nom au hasard
     public static String choisirNomPotentiel() {
@@ -46,5 +46,15 @@ public class Joueur implements Serializable { // Implémentation pour une séria
             e.printStackTrace(); // En cas d'erreur, affiche la trace de l'exception
         }
         return joueurs.toArray(new Joueur[joueurs.size()]); // Retourne la liste des joueurs sous forme de tableau
+    }
+
+    public boolean EasterEgg(){
+        if (this.colonne==10 && this.ligne==0){
+            System.out.println("Clement est vraiment le plus beaux");
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 }

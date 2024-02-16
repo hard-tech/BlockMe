@@ -28,20 +28,20 @@ public class Main {
                     " |  _ \\| |/ _ \\ / __| |/ / |\\/| |/ _ \\\n" +
                     " | |_) | | (_) | (__|   <| |  | |  __/\n" +
                     " |____/|_|\\___/ \\___|_|\\_\\_|  |_|\\___|\n" +
-                    "            ||          ||             \n"
+                    "             │           │             \n"
             );
 
             // Afficher le menu principal
             System.out.print("" +
-                    "            ||          ||     \n" +
-                    "        ====================== \n" +
-                    "        ||                  || \n" +
-                    "        ||    1 - Jouer     || \n" +
-                    "        ||    2 - Règles    || \n" +
-                    "        ||    3 - Scores    || \n" +
-                    "        ||    4 - Quitter   || \n" +
-                    "        ||                  || \n" +
-                    "        ====================== \n"
+                    "             │           │     \n" +
+                    "        ┌────────────────────┐ \n" +
+                    "        │                    │ \n" +
+                    "        │     1 - Jouer      │ \n" +
+                    "        │     2 - Règles     │ \n" +
+                    "        │     3 - Scores     │ \n" +
+                    "        │     4 - Quitter    │ \n" +
+                    "        │                    │ \n" +
+                    "        └────────────────────┘ \n"
             );
 
             // Tant que l'utilisateur ne saisit pas une option valide, demander à nouveau
@@ -67,7 +67,6 @@ public class Main {
                 Regles.afficherRegles(); // Afficher les règles
                 choix = ""; // Réinitialise la variable de choix à une chaîne vide
             }
-
             if (choix.equals("3")) { // Si l'utilisateur saisit les scores
                 String choixOrdreCroissant = ""; // Initialise la variable de choix à une chaîne vide
                 //demander la variable choixOrdreCroissant à une chaîne vide pour
