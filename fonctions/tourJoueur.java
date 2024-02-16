@@ -17,17 +17,22 @@ public class tourJoueur {
         int[] coordoneesCaseADetruire = new int[2];
                         
         boolean caseDetruite = false;
+        boolean voirRegles = false;
 
         do{
             Plateau.nettoyageCasePrecedente(joueurs); // Nettoyage des coordonnées du plateau de jeu (avant déplacement)
             System.out.println("Dans quelle direction voulez vous vous déplacer '"+ joueurs[joueurIndex].nom +"' ? (haut 'z', bas 's', gauche 'q', droite 'd') :");
             System.out.println(directionDeplacement);
             directionDeplacement = entre.nextLine().toLowerCase(); // Lire l'entrée utilisateur
+            if(directionDeplacement.equals("regles") || directionDeplacement.equals("règles")){
+                voirRegles = true;
+                affichageJeu.afficher(joueurs, nombreDeJoueursEnVie, voirRegles); // Afficher tout le content du plateau de jeu et information
+            }
             
-        }while(!deplacerJoueur.seDeplacer(joueurs[joueurIndex], joueurs, directionDeplacement, Plateau.recuperePlateau())); // redemmander à l'utilisateur vers qu'elle dirrection veut'il se déplacer temps que la dirrection est interdite ou invalid
+        }while(!deplacerJoueur.seDeplacer(joueurs[joueurIndex], joueurs, directionDeplacement, Plateau.recuperePlateau(), nombreDeJoueursEnVie)); // redemmander à l'utilisateur vers qu'elle dirrection veut'il se déplacer temps que la dirrection est interdite ou invalid
 
         Plateau.miseAJourPlateauDeJeu(joueurs); // mise à jour de la plateau de jeu
-        affichageJeu.afficher(joueurs, nombreDeJoueursEnVie); // Afficher tout le content du plateau de jeu et information
+        affichageJeu.afficher(joueurs, nombreDeJoueursEnVie, voirRegles); // Afficher tout le content du plateau de jeu et information
 
 
         while (!caseDetruite) {
@@ -39,6 +44,10 @@ public class tourJoueur {
                 do {
                     System.out.println("\nQuelle case voulez-vous détruire ? (Ex : K1) :");
                     positionCase = entre.nextLine().toUpperCase(); // Lire et convertir l'entrée utilisateur en majuscules
+
+                    if(directionDeplacement.toLowerCase().equals("regles") || directionDeplacement.toLowerCase().equals("règles")){
+                        voirRegles = true;
+                    }
             
                     // Corrige l'expression régulière pour qu'elle accepte les chiffres de 1 à 9 et 10 après les lettres de A à K
                 } while (!positionCase.matches("[ABCDEFGHIJK](10|[1-9])")); // Regex pour vérifier que la position est bien valide

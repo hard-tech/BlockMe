@@ -6,7 +6,7 @@ public class deplacerJoueur {
     /**
      * La fonction "seDeplacer" permet de déplacer un joueur dans une direction tout en vérifiant s'il peut.
      */
-    public static boolean seDeplacer(Joueur joueur, Joueur[] joueurs, String direction, String[][] plateau) {
+    public static boolean seDeplacer(Joueur joueur, Joueur[] joueurs, String direction, String[][] plateau, int nombreDeJoueursEnVie) {
         // Stocker les coordonnées du nouveau déplacement pour le joueur
         int nouvelleLigne = joueur.ligne;
         int nouvelleColonne = joueur.colonne;
@@ -27,7 +27,13 @@ public class deplacerJoueur {
         else if (direction.equals("d")) {
             nouvelleColonne++; // Déplacer vers la droite
         }
-        // Si la direction n'est pas valide
+        else if (direction.equals("exit")) {
+            // Revenir au menuelle
+            nombreDeJoueursEnVie = 0; // 0 permet de dir que l'on veu que la partie s'arrête
+        }
+        else if (direction.equals("regles") || direction.equals("règles")) {
+            return false;
+        }
         else {
             System.out.println("Direction non valide !");
             return false;

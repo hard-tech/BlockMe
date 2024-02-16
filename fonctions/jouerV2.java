@@ -36,6 +36,9 @@ public class jouerV2 {
 
         Joueur[] joueurs; // initialiser le tableau de joueurs
 
+        boolean exit = false; // Initialiser la variable de type boolean pour le fonctionnement de la
+        boolean voirRegle = false; // Initialiser la variable de type boolean pour le fonctionnement de la
+
         do { // Demmander les entrées de l'utilisateur (combien de joueurs veules jouer)
             System.out.println("\n----- Veuillez saisir le nombre de joueur (entre 2 et 4) -----\n");
             nombreDeJoueursVoulu = entre.next(); // Lire l'entrée utilisateur
@@ -70,7 +73,7 @@ public class jouerV2 {
                 }// Mise à jours du nombre de joeur en vie
 
                 
-                affichageJeu.afficher(joueurs, nombreDeJoueursEnVie); // Afficher tout le content du plateau de jeu et information
+                affichageJeu.afficher(joueurs, nombreDeJoueursEnVie, voirRegle); // Afficher tout le content du plateau de jeu et information
                 if(joueurs[i].enVie){ 
                     if(nombreDeJoueursEnVie == 1 || nombreDeJoueursEnVie == 0) {
                         break;
@@ -84,20 +87,23 @@ public class jouerV2 {
             }
         }
 
-        try {
-            // Afficher le message de fin de jeu
-            System.out.println("" +
-                " ____                         _                                                 __                   _       _   _                                  \n" +
-                "| __ ) _ __ __ ___   _____   | |_ _   _    __ _ ___    __ _  __ _  __ _ _ __   /_/   _ __ ___   __ _(_)___  | |_( ) ___  ___    __ _ _   _  ___ ____\n" +
-                "|  _ \\| '__/ _` \\ \\ / / _ \\  | __| | | |  / _` / __|  / _` |/ _` |/ _` | '_ \\ / _ \\ | '_ ` _ \\ / _` | / __| | __|/ / _ \\/ __|  / _` | | | |/ _ \\_  /\n" +
-                "| |_) | | | (_| |\\ V / (_) | | |_| |_| | | (_| \\__ \\ | (_| | (_| | (_| | | | |  __/ | | | | | | (_| | \\__ \\ | |_  |  __/\\__ \\ | (_| | |_| |  __// / \n" +
-                "|____/|_|  \\__,_| \\_/ \\___/   \\__|\\__,_|  \\__,_|___/  \\__, |\\__,_|\\__, |_| |_|\\___| |_| |_| |_|\\__,_|_|___/  \\__|  \\___||___/  \\__, |\\__,_|\\___/___|\n" +
-                "                                                      |___/       |___/                                                        |___/                " +
-                "");
-
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
+        if(nombreDeJoueursEnVie == 1 || nombreDeJoueursEnVie == 0) {
+            try {
+                // Afficher le message de fin de jeu
+                System.out.println("" +
+                    " ____                         _                                                 __                   _       _   _                                  \n" +
+                    "| __ ) _ __ __ ___   _____   | |_ _   _    __ _ ___    __ _  __ _  __ _ _ __   /_/   _ __ ___   __ _(_)___  | |_( ) ___  ___    __ _ _   _  ___ ____\n" +
+                    "|  _ \\| '__/ _` \\ \\ / / _ \\  | __| | | |  / _` / __|  / _` |/ _` |/ _` | '_ \\ / _ \\ | '_ ` _ \\ / _` | / __| | __|/ / _ \\/ __|  / _` | | | |/ _ \\_  /\n" +
+                    "| |_) | | | (_| |\\ V / (_) | | |_| |_| | | (_| \\__ \\ | (_| | (_| | (_| | | | |  __/ | | | | | | (_| | \\__ \\ | |_  |  __/\\__ \\ | (_| | |_| |  __// / \n" +
+                    "|____/|_|  \\__,_| \\_/ \\___/   \\__|\\__,_|  \\__,_|___/  \\__, |\\__,_|\\__, |_| |_|\\___| |_| |_| |_|\\__,_|_|___/  \\__|  \\___||___/  \\__, |\\__,_|\\___/___|\n" +
+                    "                                                      |___/       |___/                                                        |___/                " +
+                    "");
+    
+                Thread.sleep(5000);
+                System.out.print("\033[H\033[2J"); // Clear le terminal
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 }
