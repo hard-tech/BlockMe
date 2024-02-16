@@ -33,13 +33,20 @@ public class afficherScores { // Définition de la classe afficherScores
         }
     }
     
-    public static void lireScores(String nomFichier, boolean ordreCroissant) { // Définition d'une méthode lireScores prenant en paramètre un nom de fichier et un booléen indiquant l'ordre de tri
-        Joueur[] joueurs = Joueur.chargerJoueur(nomFichier); // Chargement des joueurs à partir du fichier
-        trie(joueurs, ordreCroissant); // Tri des joueurs
-        for (int i = 0; i < joueurs.length; i++){ // Parcours des joueurs triés
-            System.out.println(joueurs[i].nom); // Affichage du nom du joueur
-            System.out.println(joueurs[i].score); // Affichage du score du joueur
-            System.out.println("\n"); // Affichage d'une ligne vide
+    public static void lireScores(boolean ordreCroissant) { // Définition d'une méthode lireScores prenant en paramètre un nom de fichier et un booléen indiquant l'ordre de tri
+        File fichier = new File("objets.ser");
+        // Vérifiez si le fichier existe
+        if (fichier.exists()) {
+            Joueur[] joueurs = Joueur.chargerJoueur(); // Chargement des joueurs à partir du fichier
+            trie(joueurs, ordreCroissant); // Tri des joueurs
+            for (int i = 0; i < joueurs.length; i++){ // Parcours des joueurs triés
+                System.out.println(joueurs[i].nom); // Affichage du nom du joueur
+                System.out.println(joueurs[i].score); // Affichage du score du joueur
+                System.out.println("\n"); // Affichage d'une ligne vide
+            }   
+        }
+        else {
+            System.out.println("Aucun score n'a été enregistré");
         }
     }
 }

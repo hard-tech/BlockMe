@@ -5,13 +5,13 @@ import java.util.ArrayList;
 
 public class Joueur implements Serializable { // Implémentation pour une sérialisation
 
-    // définition de la varible enVie
-    public boolean enVie = true;
-    public String nom;
-    public int colonne;
-    public int ligne;
-    private static final String[] nomsPotentiels = {"Syndra", "Teemo", "Warwick", "Maitre Yi", "Queen", "Lux", "Brand", "Fizz", "Kassadin", "Yasuo", "Rengar", "Katarina", "Kayle", "Illaoi", "Trundle"};
-
+    // Définition des variables
+    public static boolean enVie = true; // Variable statique pour suivre l'état de vie des joueurs
+    public String nom; // Le nom du joueur
+    public int colonne; // La colonne actuelle du joueur
+    public int ligne; // La ligne actuelle du joueur
+    public int score; // Le score du joueur
+    private static final String[] nomsPotentiels = {"Syndra", "Teemo", "Warwick", "Maitre Yi", "Queen", "Lux", "Brand", "Fizz", "Kassadin", "Yasuo", "Rengar", "Katarina", "Kayle", "Illaoi", "Trundle"}; // Liste des noms potentiels pour les joueurs
 
     // Choisir dans la liste des noms potentiels un nom au hasard
     public static String choisirNomPotentiel() {
@@ -31,9 +31,9 @@ public class Joueur implements Serializable { // Implémentation pour une séria
     }
     
     // Fonction qui charge les objets sérialisés d'un fichier peu importe le nombre d'objets dans le fichier
-    public static Joueur[] chargerJoueur(String nomFichier) {
+    public static Joueur[] chargerJoueur() {
         ArrayList<Joueur> joueurs = new ArrayList<>(); // Crée une liste pour stocker les joueurs
-        try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(nomFichier))) {
+        try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("objets.ser"))) {
             while (true) {
                 try {
                     Joueur joueur = (Joueur) inputStream.readObject(); // Lit chaque joueur du fichier
@@ -46,15 +46,5 @@ public class Joueur implements Serializable { // Implémentation pour une séria
             e.printStackTrace(); // En cas d'erreur, affiche la trace de l'exception
         }
         return joueurs.toArray(new Joueur[joueurs.size()]); // Retourne la liste des joueurs sous forme de tableau
-    }
-
-    public boolean EasterEgg(){
-        if (this.colonne==10 && this.ligne==0){
-            System.out.println("Clement est vraiment le plus beaux");
-            return true;
-        }
-        else{
-            return false;
-        }
     }
 }

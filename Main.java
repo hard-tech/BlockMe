@@ -93,10 +93,10 @@ public class Main {
                 // Clear le terminal
                 System.out.print("\033[H\033[2J");
                 if (choixOrdreCroissant.equals("1")) {
-                    afficherScores.lireScores("objets.ser", true);
+                    afficherScores.lireScores(true);
                 }
                 if (choixOrdreCroissant.equals("2")) {
-                    afficherScores.lireScores("objets.ser",false);
+                    afficherScores.lireScores(false);
                 }
                 choix = ""; // Réinitialise la variable de choix à une chaîne vide
             }

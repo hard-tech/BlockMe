@@ -54,7 +54,7 @@ public class jouerV2 {
         // Générer les joueurs
             joueurs = new Joueur[nombreDeJoueurs]; // Instancier un tableau contenant les joueurs
             nomDesJoueurs = new String[nombreDeJoueurs]; // Instancier un tableau contenant les noms des joueurs
-            generationJoueurs.generationJoueurs(nomDesJoueurs, nombreDeJoueurs, joueurs); // Générer les joueurs
+            Joueur[] joueurExistant = generationJoueurs.generationJoueurs(nomDesJoueurs, nombreDeJoueurs, joueurs); // Générer les joueurs
         
         Plateau.initialisationPlateauDeJeu(nombreDeJoueurs, joueurs); // Initialiser le plateau de jeu
         nombreDeJoueursEnVie = joueurs.length; // Initialiser le nombre de joueurs en vie
@@ -90,6 +90,7 @@ public class jouerV2 {
         if(nombreDeJoueursEnVie == 1 || nombreDeJoueursEnVie == 0) {
             try {
                 // Afficher le message de fin de jeu
+                Joueur.sauvegarderJoueur(joueurExistant, "objets.ser"); // sauvegarde des scores dans le fichier
                 System.out.println("" +
                     " ____                         _                                                 __                   _       _   _                                  \n" +
                     "| __ ) _ __ __ ___   _____   | |_ _   _    __ _ ___    __ _  __ _  __ _ _ __   /_/   _ __ ___   __ _(_)___  | |_( ) ___  ___    __ _ _   _  ___ ____\n" +
