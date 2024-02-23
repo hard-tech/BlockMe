@@ -1,6 +1,6 @@
-# Titre du Jeu (Remplacer par le nom réel de votre jeu)
+# BlockMe
 
-Description courte de votre jeu, incluant son but et son concept principal. Par exemple, "Titre du Jeu est un jeu compétitif multijoueur où les joueurs naviguent sur un plateau pour être le dernier survivant."
+Jeu compétitif multijoueur où les joueurs naviguent sur un plateau pour être le dernier survivant.
 
 ## Règles du Jeu
 
